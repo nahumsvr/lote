@@ -147,105 +147,113 @@ export default function MapaPage() {
           <Stat count="1" label="EVITAR" color="var(--redT)" />
           <Stat count="14" label="REPORTES" color="var(--gold)" />
         </div>
-      </div>
 
-      {/* Alert Carousel */}
-      <div className="relative flex-shrink-0 bg-[var(--m-alertbg)] shadow-[var(--m-alertsh)] m-[9px_12px] border border-[var(--m-alertbd)] rounded-[22px] overflow-hidden">
-        <div className="flex justify-center pt-[9px] pb-[6px]">
-          <span className="bg-[var(--m-handle)] rounded-full w-[34px] h-[4px]"></span>
-        </div>
-
-        {/* CSS Scroll Snap Carousel */}
+        {/* Alert Carousel — floating liquid glass panel, bottom of map */}
         <div
-          ref={scrollRef}
-          className="flex pb-2 overflow-x-auto snap-mandatory snap-x scrollbar-none"
-          style={{ scrollSnapType: "x mandatory" }}
+          className="bottom-[12px] left-[12px] right-[12px] z-[500] absolute rounded-[22px] overflow-hidden border border-[var(--m-glassbd)]"
+          style={{
+            background: "rgba(19, 23, 42, 0.72)",
+            backdropFilter: "blur(22px) saturate(1.5)",
+            WebkitBackdropFilter: "blur(22px) saturate(1.5)",
+            boxShadow: "0 8px 32px -12px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08)",
+          }}
         >
-          {ALERTS.map((alert, i) => (
-            <div
-              key={alert.id}
-              ref={(el) => {
-                slideRefs.current[i] = el;
-              }}
-              className="flex-[0_0_100%] px-[18px] pb-[6px] min-w-full"
-              style={{
-                scrollSnapAlign: "center",
-                transform: activeIdx === i ? "scale(1)" : "scale(0.97)",
-                opacity: activeIdx === i ? 1 : 0.55,
-                transition: "transform 0.3s ease, opacity 0.3s ease",
-              }}
-            >
-              <div className="flex justify-between items-center mb-[9px]">
-                <div className="flex items-center gap-2">
-                  <span
-                    className={`w-2 h-2 rounded-full animate-pulseDot ${alert.kind === "evitar" ? "bg-[#D93030] shadow-[0_0_8px_#D93030]" : "bg-[#F0B429] shadow-[0_0_8px_#F0B429]"}`}
-                  ></span>
-                  <span
-                    className={`font-mono text-[10px] font-semibold tracking-[0.09em] ${alert.kind === "evitar" ? "text-[var(--redT)]" : "text-[var(--gold)]"}`}
-                  >
-                    {alert.label}
-                  </span>
-                </div>
-                <span className="font-mono text-[10px] text-[var(--faint)]">
-                  {alert.time}
-                </span>
-              </div>
-              <div
-                className="text-[14.5px] text-[var(--text)] leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: alert.body }}
-              />
-              <div className="flex justify-between items-center mt-[13px]">
-                <div className="flex items-center gap-[7px] font-mono text-[10.5px] text-[var(--mute)]">
-                  <Signal size={13} className="text-[var(--gold)]" />
-                  <span>
-                    <b className="font-normal text-[var(--gold)]">
-                      {alert.sources}
-                    </b>{" "}
-                    confirman
-                  </span>
-                </div>
-                <button
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-semibold ${
-                    alert.kind === "evitar"
-                      ? "bg-[#D93030] text-white"
-                      : "bg-[#F0B429] text-[#13172A]"
-                  }`}
-                >
-                  {alert.cta}
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+          <div className="flex justify-center pt-[9px] pb-[6px]">
+            <span className="bg-[var(--m-handle)] rounded-full w-[34px] h-[4px]"></span>
+          </div>
 
-        {/* Dot indicators */}
-        <div className="flex justify-center items-center gap-[6px] pt-[4px] pb-[10px]">
-          {ALERTS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                scrollRef.current?.scrollTo({
-                  left: scrollRef.current.offsetWidth * i,
-                  behavior: "smooth",
-                });
-              }}
-              style={{
-                width: activeIdx === i ? "18px" : "6px",
-                height: "6px",
-                borderRadius: "9999px",
-                background:
-                  activeIdx === i
-                    ? ALERTS[i].kind === "evitar"
-                      ? "#D93030"
-                      : "#F0B429"
-                    : "var(--m-handle)",
-                transition: "width 0.3s ease, background 0.3s ease",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-              }}
-            />
-          ))}
+          {/* CSS Scroll Snap Carousel */}
+          <div
+            ref={scrollRef}
+            className="flex pb-2 overflow-x-auto snap-mandatory snap-x scrollbar-none"
+            style={{ scrollSnapType: "x mandatory" }}
+          >
+            {ALERTS.map((alert, i) => (
+              <div
+                key={alert.id}
+                ref={(el) => {
+                  slideRefs.current[i] = el;
+                }}
+                className="flex-[0_0_100%] px-[18px] pb-[6px] min-w-full"
+                style={{
+                  scrollSnapAlign: "center",
+                  transform: activeIdx === i ? "scale(1)" : "scale(0.97)",
+                  opacity: activeIdx === i ? 1 : 0.55,
+                  transition: "transform 0.3s ease, opacity 0.3s ease",
+                }}
+              >
+                <div className="flex justify-between items-center mb-[9px]">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`w-2 h-2 rounded-full animate-pulseDot ${alert.kind === "evitar" ? "bg-[#D93030] shadow-[0_0_8px_#D93030]" : "bg-[#F0B429] shadow-[0_0_8px_#F0B429]"}`}
+                    ></span>
+                    <span
+                      className={`font-mono text-[10px] font-semibold tracking-[0.09em] ${alert.kind === "evitar" ? "text-[var(--redT)]" : "text-[var(--gold)]"}`}
+                    >
+                      {alert.label}
+                    </span>
+                  </div>
+                  <span className="font-mono text-[10px] text-[var(--faint)]">
+                    {alert.time}
+                  </span>
+                </div>
+                <div
+                  className="text-[14.5px] text-[var(--text)] leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: alert.body }}
+                />
+                <div className="flex justify-between items-center mt-[13px]">
+                  <div className="flex items-center gap-[7px] font-mono text-[10.5px] text-[var(--mute)]">
+                    <Signal size={13} className="text-[var(--gold)]" />
+                    <span>
+                      <b className="font-normal text-[var(--gold)]">
+                        {alert.sources}
+                      </b>{" "}
+                      confirman
+                    </span>
+                  </div>
+                  <button
+                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-[12.5px] font-semibold ${
+                      alert.kind === "evitar"
+                        ? "bg-[#D93030] text-white"
+                        : "bg-[#F0B429] text-[#13172A]"
+                    }`}
+                  >
+                    {alert.cta}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Dot indicators */}
+          <div className="flex justify-center items-center gap-[6px] pt-[4px] pb-[10px]">
+            {ALERTS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  scrollRef.current?.scrollTo({
+                    left: scrollRef.current.offsetWidth * i,
+                    behavior: "smooth",
+                  });
+                }}
+                style={{
+                  width: activeIdx === i ? "18px" : "6px",
+                  height: "6px",
+                  borderRadius: "9999px",
+                  background:
+                    activeIdx === i
+                      ? ALERTS[i].kind === "evitar"
+                        ? "#D93030"
+                        : "#F0B429"
+                      : "var(--m-handle)",
+                  transition: "width 0.3s ease, background 0.3s ease",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>

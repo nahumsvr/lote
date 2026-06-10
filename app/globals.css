@@ -141,6 +141,10 @@ body {
 .leaflet-control-attribution {
   display: none;
 }
+/* Push zoom controls above the floating alert carousel */
+.leaflet-bottom.leaflet-right {
+  bottom: 250px !important;
+}
 
 /* Carousel snap container */
 .snap-x-mandatory {
