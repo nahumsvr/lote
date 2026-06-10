@@ -147,7 +147,8 @@ body {
 }
 
 /* Themed zoom controls */
-.leaflet-control-zoom {
+.leaflet-control-zoom,
+.leaflet-touch .leaflet-control-zoom {
   border: 1px solid var(--m-glassbd) !important;
   border-radius: 10px !important;
   overflow: hidden;
@@ -155,7 +156,8 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
-.leaflet-control-zoom a {
+.leaflet-control-zoom a,
+.leaflet-touch .leaflet-control-zoom a {
   background: var(--m-glass) !important;
   color: var(--text) !important;
   border: none !important;
@@ -167,17 +169,21 @@ body {
   font-weight: 300 !important;
   transition: background 0.15s ease, color 0.15s ease !important;
 }
-.leaflet-control-zoom a:last-child {
+.leaflet-control-zoom a:last-child,
+.leaflet-touch .leaflet-control-zoom a:last-child {
   border-bottom: none !important;
 }
-.leaflet-control-zoom a:hover {
+.leaflet-control-zoom a:hover,
+.leaflet-touch .leaflet-control-zoom a:hover {
   background: var(--accent-tint) !important;
   color: var(--accent2) !important;
 }
-.leaflet-control-zoom-in {
+.leaflet-control-zoom-in,
+.leaflet-touch .leaflet-control-zoom-in {
   border-radius: 10px 10px 0 0 !important;
 }
-.leaflet-control-zoom-out {
+.leaflet-control-zoom-out,
+.leaflet-touch .leaflet-control-zoom-out {
   border-radius: 0 0 10px 10px !important;
 }
 
