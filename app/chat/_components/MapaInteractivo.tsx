@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import "leaflet/dist/leaflet.css"
 
 interface Zona {
     name: string
@@ -46,7 +47,8 @@ export default function MapaInteractivo({ zona, lat, lng }: MapaInteractivoProps
                 center: [lat, lng],
                 zoom: 13,
                 zoomControl: true,
-                scrollWheelZoom: true,
+                scrollWheelZoom: false,
+                attributionControl: false,
             })
 
             mapInstanceRef.current = map

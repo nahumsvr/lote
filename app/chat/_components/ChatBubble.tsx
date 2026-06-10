@@ -1,5 +1,5 @@
 import ZonaChip from "./ZonaChip"
-import MapaZona from "./MapaZona"
+import MapaInteractivo from "./MapaInteractivo"
 
 type Estado = "tranquilo" | "monitorear" | "evitar"
 
@@ -32,15 +32,15 @@ export default function ChatBubble({
     mapa,
 }: ChatBubbleProps) {
     return (
-        <div className={`flex flex-col gap-1 ${esUsuario ? "self-end items-end max-w-[82%]" : "self-start items-start max-w-[88%]"}`}>
+        <div className={`flex flex-col gap-1 ${esUsuario ? "self-end items-end max-w-[82%]" : "self-start items-start max-w-[88%] min-w-0"}`}>
             <div
-                className={`px-4 py-3 text-[13.5px] leading-relaxed ${esUsuario
+                className={`px-4 py-3 text-[13.5px] leading-relaxed w-full ${esUsuario
                     ? "bg-[#D93030] text-white rounded-[20px_20px_6px_20px]"
                     : "bg-[#1E2438] text-[#F4F2EE] border border-white/[0.06] rounded-[20px_20px_20px_6px]"
                     }`}
             >
                 {mensaje}
-                {mapa && <MapaZona zona={mapa.zona} lat={mapa.lat} lng={mapa.lng} />}
+                {mapa && <MapaInteractivo zona={mapa.zona} lat={mapa.lat} lng={mapa.lng} />}
                 {chips && chips.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-3">
                         {chips.map((chip, i) => (

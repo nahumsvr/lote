@@ -165,7 +165,7 @@ export default function ChatPage() {
     }
 
     return (
-        <div className="flex flex-col h-screen bg-[#13172A]">
+        <div className="flex flex-col h-dvh bg-[#13172A] overflow-hidden">
 
             {/* Header */}
             <div className="flex items-center gap-3 px-5 py-3 border-b border-white/[0.07]">
@@ -182,14 +182,14 @@ export default function ChatPage() {
                         <path d="M21 28 Q24 30 27 28" stroke="#D93030" strokeWidth="1.8" strokeLinecap="round" fill="none" />
                     </svg>
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                     <div className="font-semibold text-[17px] text-[#F4F2EE] leading-tight">Lote</div>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2ECC71] animate-pulse" />
-                        <span className="text-[11.5px] text-white/55">monitoreando CDMX</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#2ECC71] animate-pulse flex-shrink-0" />
+                        <span className="text-[11.5px] text-white/55 truncate">monitoreando CDMX</span>
                     </div>
                 </div>
-                <div className="ml-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-[rgba(214,184,94,0.1)] border border-[rgba(214,184,94,0.28)]">
+                <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-[rgba(214,184,94,0.1)] border border-[rgba(214,184,94,0.28)]">
                     <span className="font-mono font-bold text-[10.5px] text-[#D6B85E]">7</span>
                     <span className="font-mono text-[8.5px] text-[rgba(214,184,94,0.7)] leading-tight">ZONAS<br />ACTIVAS</span>
                 </div>
