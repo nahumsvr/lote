@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import MapWrapper from "./_components/MapWrapper";
-import { Signal, Compass } from "lucide-react";
+import { Signal, ChevronDown } from "lucide-react";
 
 const MOCK_ZONES = [
   {
@@ -87,23 +87,20 @@ const ALERTS = [
 
 export default function MapaPage() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [showCarousel, setShowCarousel] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    slideRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveIdx(i);
-        },
-        { root: scrollRef.current, threshold: 0.6 },
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const idx = Math.round(container.scrollLeft / container.offsetWidth);
+      setActiveIdx(idx);
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -148,19 +145,29 @@ export default function MapaPage() {
           <Stat count="14" label="REPORTES" color="var(--gold)" />
         </div>
 
-        {/* Alert Carousel — floating liquid glass panel, bottom of map */}
+        {/* Alert Carousel — fully hides when closed */}
         <div
-          className="bottom-[12px] left-[12px] right-[12px] z-[500] absolute rounded-[22px] overflow-hidden border border-[var(--m-glassbd)]"
+          className="bottom-[12px] left-[12px] right-[12px] z-[500] absolute rounded-[22px]"
           style={{
             background: "rgba(19, 23, 42, 0.72)",
             backdropFilter: "blur(22px) saturate(1.5)",
             WebkitBackdropFilter: "blur(22px) saturate(1.5)",
             boxShadow: "0 8px 32px -12px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            transform: showCarousel ? "translateY(0)" : "translateY(110%)",
+            opacity: showCarousel ? 1 : 0,
+            pointerEvents: showCarousel ? "auto" : "none",
+            transition: "transform 0.42s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease",
           }}
         >
-          <div className="flex justify-center pt-[9px] pb-[6px]">
-            <span className="bg-[var(--m-handle)] rounded-full w-[34px] h-[4px]"></span>
-          </div>
+          {/* Handle — tap to hide */}
+          <button
+            onClick={() => setShowCarousel(false)}
+            className="flex justify-center items-center pt-[9px] pb-[6px] w-full"
+            style={{ background: "none", border: "none", cursor: "pointer", padding: "9px 0 6px" }}
+          >
+            <span className="bg-[var(--m-handle)] rounded-full w-[34px] h-[4px]" />
+          </button>
 
           {/* CSS Scroll Snap Carousel */}
           <div
@@ -171,9 +178,6 @@ export default function MapaPage() {
             {ALERTS.map((alert, i) => (
               <div
                 key={alert.id}
-                ref={(el) => {
-                  slideRefs.current[i] = el;
-                }}
                 className="flex-[0_0_100%] px-[18px] pb-[6px] min-w-full"
                 style={{
                   scrollSnapAlign: "center",
@@ -255,6 +259,32 @@ export default function MapaPage() {
             ))}
           </div>
         </div>
+
+        {/* FAB — restore carousel */}
+        <button
+          onClick={() => setShowCarousel(true)}
+          className="bottom-[20px] left-1/2 z-[500] absolute flex justify-center items-center rounded-full w-11 h-11"
+          style={{
+            transform: showCarousel
+              ? "translateX(-50%) scale(0.6)"
+              : "translateX(-50%) scale(1)",
+            opacity: showCarousel ? 0 : 1,
+            pointerEvents: showCarousel ? "none" : "auto",
+            background: "rgba(19, 23, 42, 0.78)",
+            backdropFilter: "blur(18px) saturate(1.4)",
+            WebkitBackdropFilter: "blur(18px) saturate(1.4)",
+            border: "1px solid rgba(255,255,255,0.14)",
+            boxShadow: "0 4px 20px -6px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)",
+            transition: "transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.28s ease",
+            cursor: "pointer",
+          }}
+        >
+          <ChevronDown
+            size={18}
+            style={{ transform: "rotate(180deg)", color: "rgba(244,242,238,0.85)" }}
+          />
+        </button>
+
       </div>
     </main>
   );
