@@ -55,7 +55,9 @@ export default function MapaPage() {
 
       {/* Map Container */}
       <div className="relative flex-1 min-h-[280px]">
-        <MapWrapper zones={MOCK_ZONES} center={[19.4190, -99.1590]} />
+        <div className="absolute inset-0">
+          <MapWrapper zones={MOCK_ZONES} center={[19.4190, -99.1590]} />
+        </div>
         
         {/* Compass floating above map */}
         <div className="absolute top-[14px] left-[16px] w-[34px] h-[34px] rounded-full bg-[var(--m-glass)] border border-[var(--m-glassbd)] backdrop-blur-md flex items-center justify-center z-[500]">

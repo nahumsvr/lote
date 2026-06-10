@@ -105,7 +105,7 @@ export default function Map({ zones, center }: MapProps) {
   }, [zones, center]);
 
   return (
-    <div className="relative w-full h-full bg-[var(--m-mapbg)] overflow-hidden border-y border-[var(--m-statbd)]">
+    <div className="absolute inset-0 bg-[var(--m-mapbg)] overflow-hidden border-y border-[var(--m-statbd)]">
       {/* Radar Overlay over the map but below leaflet controls */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full pointer-events-none z-[400] animate-mapSweep" 
            style={{
@@ -116,7 +116,7 @@ export default function Map({ zones, center }: MapProps) {
       </div>
       
       {/* Map Container */}
-      <div ref={mapRef} className="w-full h-full z-10" />
+      <div ref={mapRef} className="absolute inset-0 z-10" />
     </div>
   );
 }
