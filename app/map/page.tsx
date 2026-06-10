@@ -1,5 +1,8 @@
+"use client";
+import { useRef, useState, useEffect } from "react";
 import MapWrapper from "./_components/MapWrapper";
 import { Signal, Compass } from "lucide-react";
+
 const MOCK_ZONES = [
   { name: "POLANCO", lat: 19.4336, lng: -99.1994, radius: 1200, status: "tranquilo" as const },
   { name: "CENTRO", lat: 19.4326, lng: -99.1332, radius: 1500, status: "evitar" as const },
@@ -29,6 +32,24 @@ const ALERTS = [
 ];
 
 export default function MapaPage() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    slideRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveIdx(i); },
+        { root: scrollRef.current, threshold: 0.6 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   return (
     <main className="flex-1 flex flex-col relative z-10 w-full max-w-md mx-auto">
       
@@ -80,9 +101,23 @@ export default function MapaPage() {
         </div>
         
         {/* CSS Scroll Snap Carousel */}
-        <div className="flex overflow-x-auto snap-x-mandatory scrollbar-none pb-2">
-          {ALERTS.map((alert) => (
-            <div key={alert.id} className="flex-[0_0_100%] min-w-full px-[18px] pb-[6px] snap-center-item">
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none pb-2"
+          style={{ scrollSnapType: 'x mandatory' }}
+        >
+          {ALERTS.map((alert, i) => (
+            <div
+              key={alert.id}
+              ref={(el) => { slideRefs.current[i] = el; }}
+              className="flex-[0_0_100%] min-w-full px-[18px] pb-[6px]"
+              style={{
+                scrollSnapAlign: 'center',
+                transform: activeIdx === i ? 'scale(1)' : 'scale(0.97)',
+                opacity: activeIdx === i ? 1 : 0.55,
+                transition: 'transform 0.3s ease, opacity 0.3s ease',
+              }}
+            >
               <div className="flex items-center justify-between mb-[9px]">
                 <div className="flex items-center gap-2">
                   <span className={`w-2 h-2 rounded-full animate-pulseDot ${alert.kind === 'evitar' ? 'bg-[#D93030] shadow-[0_0_8px_#D93030]' : 'bg-[#F0B429] shadow-[0_0_8px_#F0B429]'}`}></span>
@@ -105,6 +140,30 @@ export default function MapaPage() {
                 </button>
               </div>
             </div>
+          ))}
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center items-center gap-[6px] pb-[10px] pt-[4px]">
+          {ALERTS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                scrollRef.current?.scrollTo({ left: scrollRef.current.offsetWidth * i, behavior: 'smooth' });
+              }}
+              style={{
+                width: activeIdx === i ? '18px' : '6px',
+                height: '6px',
+                borderRadius: '9999px',
+                background: activeIdx === i
+                  ? (ALERTS[i].kind === 'evitar' ? '#D93030' : '#F0B429')
+                  : 'var(--m-handle)',
+                transition: 'width 0.3s ease, background 0.3s ease',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+              }}
+            />
           ))}
         </div>
       </div>
