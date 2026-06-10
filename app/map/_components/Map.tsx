@@ -88,33 +88,34 @@ export default function Map({ zones, center }: MapProps) {
       L.marker([zone.lat, zone.lng], { icon, interactive: false }).addTo(map);
     });
 
-    // Draw user location
-    const youIcon = L.divIcon({
-      className: 'bg-transparent border-none',
+    // Draw user location — radar in its own marker so Leaflet positions it correctly
+    const radarIcon = L.divIcon({
+      className: 'bg-transparent border-none overflow-visible',
+      html: `<div class="w-[520px] h-[520px] rounded-full animate-mapSweep" style="background: var(--m-radar); mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.6) 42%, transparent 70%); -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0,0,0,0.6) 42%, transparent 70%);"></div>`,
+      iconSize: [520, 520],
+      iconAnchor: [260, 260],
+    });
+    L.marker(center, { icon: radarIcon, interactive: false, zIndexOffset: -1000 }).addTo(map);
+
+    // Dot + ring + label marker
+    const dotIcon = L.divIcon({
+      className: 'bg-transparent border-none overflow-visible',
       html: `
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 animate-mapFloat">
-          <span class="absolute left-1/2 top-1/2 w-[22px] h-[22px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-soft)] animate-mapRing"></span>
-          <span class="relative block w-[18px] h-[18px] rounded-full bg-[var(--accent2)] border-[3px] border-[#13172A] shadow-[0_0_0_2px_var(--accent2),0_4px_10px_rgba(0,0,0,0.5)]"></span>
-          <span class="absolute top-[24px] left-1/2 -translate-x-1/2 font-mono text-[9.5px] font-semibold tracking-[0.05em] text-[#F4B8A8] drop-shadow-md whitespace-nowrap">TÚ · ROMA NORTE</span>
+        <div class="animate-mapFloat" style="position:absolute; left:0; top:0;">
+          <span class="animate-mapRing" style="position:absolute; left:-11px; top:-11px; display:block; width:22px; height:22px; border-radius:9999px; background:var(--accent-soft);"></span>
+          <span style="position:absolute; left:-9px; top:-9px; display:block; width:18px; height:18px; border-radius:9999px; background:var(--accent2); border:3px solid #13172A; box-shadow:0 0 0 2px var(--accent2),0 4px 10px rgba(0,0,0,0.5);"></span>
+          <span style="position:absolute; top:15px; left:0; transform:translateX(-50%); font-family:var(--font-geist-mono),monospace; font-size:9.5px; font-weight:600; letter-spacing:0.05em; color:#F4B8A8; white-space:nowrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9);">TÚ · ROMA NORTE</span>
         </div>
       `,
-      iconSize: [0, 0]
+      iconSize: [0, 0],
+      iconAnchor: [0, 0],
     });
-    L.marker(center, { icon: youIcon, interactive: false }).addTo(map);
+    L.marker(center, { icon: dotIcon, interactive: false }).addTo(map);
 
   }, [zones, center]);
 
   return (
     <div className="absolute inset-0 bg-[var(--m-mapbg)] overflow-hidden border-y border-[var(--m-statbd)]">
-      {/* Radar Overlay over the map but below leaflet controls */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full pointer-events-none z-[400] animate-mapSweep" 
-           style={{
-             background: 'var(--m-radar)',
-             maskImage: 'radial-gradient(circle, #000 0%, rgba(0,0,0,0.6) 42%, transparent 70%)',
-             WebkitMaskImage: 'radial-gradient(circle, #000 0%, rgba(0,0,0,0.6) 42%, transparent 70%)'
-           }}>
-      </div>
-      
       {/* Map Container */}
       <div ref={mapRef} className="absolute inset-0 z-10" />
     </div>
