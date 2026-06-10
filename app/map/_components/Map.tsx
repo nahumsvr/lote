@@ -49,20 +49,14 @@ export default function Map({ zones, center }: MapProps) {
       }
     });
     
+    const zoneColors = {
+      tranquilo: { color: '#2ECC71', fillColor: 'rgba(46, 204, 113, 0.15)', stroke: 'rgba(46, 204, 113, 0.5)', label: '#7FE0AC' },
+      monitorear: { color: '#F0B429', fillColor: 'rgba(240, 180, 41, 0.17)', stroke: 'rgba(240, 180, 41, 0.6)', label: '#F0C566' },
+      evitar:     { color: '#D93030', fillColor: 'rgba(217, 48, 48, 0.22)',  stroke: 'rgba(217, 48, 48, 0.7)',  label: '#EE8B86' },
+    };
+
     zones.forEach(zone => {
-      let color = 'var(--z-green-dot)';
-      let fillColor = 'var(--z-green-fill)';
-      let labelColor = 'var(--z-green-label)';
-      
-      if (zone.status === 'monitorear') {
-        color = 'var(--z-yellow-dot)';
-        fillColor = 'var(--z-yellow-fill)';
-        labelColor = 'var(--z-yellow-label)';
-      } else if (zone.status === 'evitar') {
-        color = 'var(--z-red-dot)';
-        fillColor = 'var(--z-red-fill)';
-        labelColor = 'var(--z-red-label)';
-      }
+      const { color, fillColor, label: labelColor } = zoneColors[zone.status];
 
       // Draw the zone
       L.circle([zone.lat, zone.lng], {
