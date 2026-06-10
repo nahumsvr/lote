@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0E1120; }
+  @keyframes lotePulseDS { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+</style>
+</helmet>
+<div style="background: #0E1120; color: #F4F2EE; font-family: 'Geist', sans-serif; min-height: 100vh; padding-bottom: 80px; overflow: hidden;">
+
+  <!-- ============ COVER ============ -->
+  <div style="max-width: 1180px; margin: 0 auto; padding: 90px 48px 70px; position: relative;">
+    <div style="position: absolute; top: 70px; right: 48px; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(circle, rgba(217,48,48,0.16), transparent 68%); filter: blur(8px);"></div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.22em; color: #D6B85E; margin-bottom: 34px;">SISTEMA DE DISEÑO · v1.0</div>
+    <div style="display: flex; align-items: center; gap: 22px;">
+      <span style="width: 78px; height: 78px; border-radius: 20px; background: #D93030; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px -10px rgba(217,48,48,0.5); flex-shrink: 0;">
+        <svg width="50" height="50" viewBox="0 0 48 48" fill="none"><g stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M15 18 8 13"/><path d="M14 23 6 22"/><path d="M15 28 8 32"/><path d="M33 18 40 13"/><path d="M34 23 42 22"/><path d="M33 28 40 32"/></g><ellipse cx="24" cy="24" rx="10.5" ry="11.5" fill="#fff"/><circle cx="20" cy="23" r="1.7" fill="#D93030"/><circle cx="28" cy="23" r="1.7" fill="#D93030"/><path d="M21 28 Q24 30 27 28" stroke="#D93030" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+      </span>
+      <h1 style="font-family: 'Geist', sans-serif; font-weight: 900; font-size: 92px; line-height: 0.9; letter-spacing: -0.04em; margin: 0; color: #F4F2EE;">Lote</h1>
+    </div>
+    <p style="font-family: 'Geist', sans-serif; font-weight: 500; font-size: 26px; line-height: 1.3; max-width: 620px; margin: 30px 0 0; color: #F4F2EE; text-wrap: pretty;">Tu carnal en la ciudad. <span style="color: rgba(244,242,238,0.55);">El que sabe lo que está pasando.</span></p>
+    <p style="font-size: 16px; line-height: 1.6; max-width: 560px; margin: 22px 0 0; color: rgba(244,242,238,0.55); text-wrap: pretty;">El sistema visual de la app de seguridad urbana en tiempo real para la Ciudad de México durante el Mundial 2026. Cálido pero tecnológico, mexicano pero universal, honesto pero no aterrador.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+      <span style="padding: 7px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); color: rgba(244,242,238,0.7);">Ciudad de México</span>
+      <span style="padding: 7px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); color: rgba(244,242,238,0.7);">Mundial 2026</span>
+      <span style="padding: 7px 13px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); color: rgba(244,242,238,0.7);">Dark + Light</span>
+      <span style="padding: 7px 13px; border-radius: 999px; border: 1px solid rgba(200,168,75,0.35); color: #D6B85E;">Geist · JetBrains Mono</span>
+    </div>
+  </div>
+
+  <div style="max-width: 1180px; margin: 0 auto; padding: 0 48px;"><div style="height: 1px; background: rgba(255,255,255,0.08);"></div></div>
+
+  <!-- ============ 01 PHILOSOPHY ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 74px 48px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">01</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">FILOSOFÍA DE COLOR</span></div>
+    <h2 style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 38px; letter-spacing: -0.02em; margin: 0 0 18px; max-width: 760px; text-wrap: balance;">Cada color tiene una razón de existir.</h2>
+    <p style="font-size: 17px; line-height: 1.65; max-width: 720px; margin: 0; color: rgba(244,242,238,0.62);">El rojo no es el rojo de peligro corporativo — es el del barro, del chile, del corazón mexicano. El fondo no es negro vacío: es la noche de CDMX, con el tono azulado del cielo antes del amanecer. El oro no es lujo — es el único guiño al Mundial que cabe sin gritar.</p>
+  </section>
+
+  <!-- ============ 02 PALETTE ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">02</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">PALETA PRINCIPAL · 5 COLORES BASE</span></div>
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
+      <sc-for list="{{ palette }}" as="c" hint-placeholder-count="5">
+        <div onClick="{{ c.copy }}" style="border-radius: 16px; overflow: hidden; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease;" style-hover="border-color: rgba(255,255,255,0.2); transform: translateY(-3px);">
+          <div style="height: 116px; background: {{ c.hex }}; display: flex; align-items: flex-end; justify-content: space-between; padding: 11px;">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: {{ c.on }}; opacity: 0.85;">{{ c.hex }}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{ c.on }}" stroke-width="1.8" style="opacity: 0.7;"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+          </div>
+          <div style="padding: 13px 13px 16px;">
+            <div style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 15px;">{{ c.name }}</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #D6B85E; margin-top: 4px;">{{ c.role }}</div>
+            <div style="font-size: 12px; line-height: 1.45; color: rgba(244,242,238,0.52); margin-top: 9px;">{{ c.usage }}</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(244,242,238,0.4); margin-top: 11px;">{{ c.token }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ 03 ALERT SYSTEM ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">03</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">EL SEMÁFORO DE LOTE</span></div>
+    <h2 style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.02em; margin: 0 0 8px;">Tres estados de zona. El corazón funcional.</h2>
+    <p style="font-size: 16px; line-height: 1.6; max-width: 680px; margin: 0 0 28px; color: rgba(244,242,238,0.55);">Calibrados para comunicar urgencia sin generar pánico. No son arbitrarios.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+      <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="3">
+        <div style="border-radius: 16px; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); padding: 22px; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: {{ a.hex }};"></div>
+          <div style="display: flex; align-items: center; gap: 11px;">
+            <span style="width: 36px; height: 36px; border-radius: 11px; background: {{ a.soft }}; border: 1px solid {{ a.border }}; display: flex; align-items: center; justify-content: center;"><span style="width: 12px; height: 12px; border-radius: 50%; background: {{ a.hex }};"></span></span>
+            <div>
+              <div style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 18px;">{{ a.state }}</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: rgba(244,242,238,0.5);">{{ a.label }} · {{ a.hex }}</div>
+            </div>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.5; color: rgba(244,242,238,0.66); margin: 18px 0 16px;">{{ a.meaning }}</p>
+          <div style="border-radius: 12px; background: rgba(0,0,0,0.18); padding: 11px 13px;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; color: rgba(244,242,238,0.4); margin-bottom: 6px;">EN LA UI</div>
+            <div style="font-size: 12.5px; line-height: 1.45; color: rgba(244,242,238,0.7);">{{ a.ui }}</div>
+          </div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(244,242,238,0.4); margin-top: 14px;">{{ a.token }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ 04 MODES / SURFACES ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">04</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">SUPERFICIES · DARK Y LIGHT</span></div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <!-- dark -->
+      <div style="border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+        <div style="background: #13172A; padding: 26px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: rgba(244,242,238,0.4); margin-bottom: 18px;">DARK MODE</div>
+          <div style="display: flex; gap: 12px;">
+            <div style="flex: 1; height: 96px; border-radius: 12px; background: #13172A; border: 1px solid rgba(255,255,255,0.12); padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(244,242,238,0.5);">Background</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F4F2EE;">#13172A</span></div>
+            <div style="flex: 1; height: 96px; border-radius: 12px; background: #1E2438; border: 1px solid rgba(255,255,255,0.06); padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(244,242,238,0.5);">Superficie</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F4F2EE;">#1E2438</span></div>
+          </div>
+          <div style="margin-top: 16px; color: #F4F2EE; font-size: 14px; line-height: 1.5;"><span style="font-family: 'Geist', sans-serif; font-weight: 700;">Texto principal</span> sobre Tinta Profunda. <span style="color: rgba(244,242,238,0.55);">Texto secundario al 55%.</span> <span style="font-family: 'JetBrains Mono', monospace; color: #D6B85E; font-size: 12px;">mono en oro.</span></div>
+        </div>
+      </div>
+      <!-- light -->
+      <div style="border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+        <div style="background: #F4F2EE; padding: 26px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: rgba(19,23,42,0.4); margin-bottom: 18px;">LIGHT MODE</div>
+          <div style="display: flex; gap: 12px;">
+            <div style="flex: 1; height: 96px; border-radius: 12px; background: #F4F2EE; border: 1px solid rgba(19,23,42,0.14); padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(19,23,42,0.5);">Background</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #13172A;">#F4F2EE</span></div>
+            <div style="flex: 1; height: 96px; border-radius: 12px; background: #FFFFFF; border: 1px solid rgba(19,23,42,0.1); padding: 12px; display: flex; flex-direction: column; justify-content: flex-end;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(19,23,42,0.5);">Superficie</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #13172A;">#FFFFFF</span></div>
+          </div>
+          <div style="margin-top: 16px; color: #13172A; font-size: 14px; line-height: 1.5;"><span style="font-family: 'Geist', sans-serif; font-weight: 700;">Texto principal</span> sobre Niebla. <span style="color: rgba(19,23,42,0.55);">Texto secundario al 55%.</span> <span style="font-family: 'JetBrains Mono', monospace; color: #9C7016; font-size: 12px;">mono en oro.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 TYPOGRAPHY ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">05</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">TIPOGRAFÍA · DOS FAMILIAS</span></div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+      <div style="border-radius: 16px; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); padding: 28px;">
+        <div style="font-family: 'Geist', sans-serif; font-weight: 900; font-size: 64px; line-height: 1; letter-spacing: -0.03em;">Aa</div>
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-top: 18px;"><span style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 20px;">Geist</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(244,242,238,0.5);">Display + Body</span></div>
+        <div style="font-size: 14px; line-height: 1.55; color: rgba(244,242,238,0.6); margin-top: 10px;">Geométrica, neutral y cálida. La personalidad de Lote: títulos, logo, números grandes y todo el cuerpo de texto.</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(244,242,238,0.4); margin-top: 14px;">300 · 400 · 500 · 700 · 800 · 900</div>
+      </div>
+      <div style="border-radius: 16px; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); padding: 28px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 64px; line-height: 1; color: #D6B85E;">Aa</div>
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-top: 18px;"><span style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 20px;">JetBrains Mono</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(244,242,238,0.5);">Datos técnicos</span></div>
+        <div style="font-size: 14px; line-height: 1.55; color: rgba(244,242,238,0.6); margin-top: 10px;">El detalle de precisión. Coordenadas, timestamps, fuentes, status y labels de zona. Siempre en oro o gris.</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(244,242,238,0.4); margin-top: 14px;">19.4326° N · 21:51 · 6 fuentes</div>
+      </div>
+    </div>
+    <div style="border-radius: 16px; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); overflow: hidden;">
+      <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="4">
+        <div style="display: flex; align-items: center; gap: 28px; padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <div style="width: 150px; flex-shrink: 0;"><div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: rgba(244,242,238,0.45);">{{ t.label }}</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #D6B85E; margin-top: 4px;">{{ t.spec }}</div></div>
+          <div style="flex: 1; font-family: {{ t.cssFont }}; font-weight: {{ t.weight }}; font-size: {{ t.px }}; color: #F4F2EE; line-height: 1.1;">{{ t.sample }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ 06 SHAPE ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">06</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">SISTEMA DE FORMA · TODO SUAVE</span></div>
+    <h2 style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.02em; margin: 0 0 28px;">Esquinas redondeadas, escala progresiva.</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+      <sc-for list="{{ shapes }}" as="s" hint-placeholder-count="4">
+        <div style="border-radius: 16px; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); padding: 24px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="width: 96px; height: 96px; border-radius: {{ s.r }}px; background: linear-gradient(135deg, #D93030, #E8563A); margin-bottom: 20px;"></div>
+          <div style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 26px;">{{ s.r }}px</div>
+          <div style="font-family: 'Geist', sans-serif; font-weight: 600; font-size: 14px; margin-top: 4px;">{{ s.name }}</div>
+          <div style="font-size: 12px; line-height: 1.4; color: rgba(244,242,238,0.5); margin-top: 8px;">{{ s.use }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ 07 COMPONENTS ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">07</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">COMPONENTES</span></div>
+
+    <!-- Zone chips -->
+    <div style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 19px; margin-bottom: 4px;">Chips de estado de zona</div>
+    <div style="font-size: 14px; color: rgba(244,242,238,0.5); margin-bottom: 18px;">Badge de estado (8px) y data chip mono (6px). Mismos colores, ambos modos.</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px;">
+      <div style="border-radius: 16px; background: #13172A; border: 1px solid rgba(255,255,255,0.08); padding: 24px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: rgba(244,242,238,0.4); margin-bottom: 16px;">DARK MODE</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 14px;">
+          <span style="padding: 5px 11px; border-radius: 8px; background: rgba(46,204,113,0.13); border: 1px solid rgba(46,204,113,0.42); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #5BD996;">TRANQUILO</span>
+          <span style="padding: 5px 11px; border-radius: 8px; background: rgba(240,180,41,0.15); border: 1px solid rgba(240,180,41,0.5); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #D6B85E;">MONITOREAR</span>
+          <span style="padding: 5px 11px; border-radius: 8px; background: rgba(217,48,48,0.13); border: 1px solid rgba(217,48,48,0.42); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #EE8B86;">EVITAR</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+          <span style="padding: 4px 8px; border-radius: 6px; background: rgba(217,48,48,0.13); border: 1px solid rgba(217,48,48,0.4); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #EE8B86;">ZÓCALO: EVITAR</span>
+          <span style="padding: 4px 8px; border-radius: 6px; background: rgba(46,204,113,0.13); border: 1px solid rgba(46,204,113,0.4); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #63D996;">EJE CENTRAL: LIBRE</span>
+        </div>
+      </div>
+      <div style="border-radius: 16px; background: #F4F2EE; border: 1px solid rgba(255,255,255,0.08); padding: 24px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: rgba(19,23,42,0.4); margin-bottom: 16px;">LIGHT MODE</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 14px;">
+          <span style="padding: 5px 11px; border-radius: 8px; background: rgba(46,204,113,0.13); border: 1px solid rgba(46,204,113,0.42); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #1E9E54;">TRANQUILO</span>
+          <span style="padding: 5px 11px; border-radius: 8px; background: rgba(240,180,41,0.15); border: 1px solid rgba(240,180,41,0.5); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #9C7016;">MONITOREAR</span>
+          <span style="padding: 5px 11px; border-radius: 8px; background: rgba(217,48,48,0.13); border: 1px solid rgba(217,48,48,0.42); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #C42828;">EVITAR</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+          <span style="padding: 4px 8px; border-radius: 6px; background: rgba(217,48,48,0.1); border: 1px solid rgba(217,48,48,0.4); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #C42828;">ZÓCALO: EVITAR</span>
+          <span style="padding: 4px 8px; border-radius: 6px; background: rgba(46,204,113,0.12); border: 1px solid rgba(46,204,113,0.4); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #1E9E54;">EJE CENTRAL: LIBRE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status dots -->
+    <div style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 19px; margin-bottom: 4px;">Indicadores de estado</div>
+    <div style="font-size: 14px; color: rgba(244,242,238,0.5); margin-bottom: 18px;">El punto del semáforo, con halo suave. Acompaña cada nombre de zona.</div>
+    <div style="display: flex; gap: 36px; border-radius: 16px; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); padding: 26px; margin-bottom: 40px;">
+      <div style="display: flex; align-items: center; gap: 11px;"><span style="width: 12px; height: 12px; border-radius: 50%; background: #2ECC71; box-shadow: 0 0 0 4px rgba(46,204,113,0.18);"></span><span style="font-size: 14px;">Tranquilo</span></div>
+      <div style="display: flex; align-items: center; gap: 11px;"><span style="width: 12px; height: 12px; border-radius: 50%; background: #F0B429; box-shadow: 0 0 0 4px rgba(240,180,41,0.2); animation: lotePulseDS 2s ease-in-out infinite;"></span><span style="font-size: 14px;">Monitorear</span></div>
+      <div style="display: flex; align-items: center; gap: 11px;"><span style="width: 12px; height: 12px; border-radius: 50%; background: #D93030; box-shadow: 0 0 0 4px rgba(217,48,48,0.18);"></span><span style="font-size: 14px;">Evitar</span></div>
+      <div style="display: flex; align-items: center; gap: 11px; margin-left: auto;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #2ECC71; animation: lotePulseDS 1.6s ease-in-out infinite;"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5BD996;">LIVE · monitoreando</span></div>
+    </div>
+
+    <!-- Chat bubbles -->
+    <div style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 19px; margin-bottom: 4px;">Burbujas de chat</div>
+    <div style="font-size: 14px; color: rgba(244,242,238,0.5); margin-bottom: 18px;">Usuario en rojo (cola inferior derecha), Lote en superficie (cola inferior izquierda). Radio 20px, cola 6px. Referencias de zona en color, data chips embebidos.</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div style="border-radius: 16px; background: #13172A; border: 1px solid rgba(255,255,255,0.08); padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: rgba(244,242,238,0.4);">DARK MODE</div>
+        <div style="align-self: flex-end; max-width: 78%; background: #D93030; color: #fff; border-radius: 20px 20px 6px 20px; padding: 11px 14px; font-size: 13.5px; line-height: 1.42;">¿Puedo llevar a mi familia al Zócalo ahorita?</div>
+        <div style="align-self: flex-start; max-width: 86%; background: #222A42; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px 20px 20px 6px; padding: 12px 14px; font-size: 13.5px; line-height: 1.5; color: #F4F2EE;">
+          <p style="margin: 0 0 10px;">Oye, hay movimiento en el <b style="color: #EE8B86;">Centro Histórico</b>. No es violento pero el acceso está lento. Mejor por <b style="color: #63D996;">Eje Central</b>.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;"><span style="padding: 4px 8px; border-radius: 6px; background: rgba(217,48,48,0.13); border: 1px solid rgba(217,48,48,0.4); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #EE8B86;">ZÓCALO: EVITAR</span><span style="padding: 4px 8px; border-radius: 6px; background: rgba(46,204,113,0.13); border: 1px solid rgba(46,204,113,0.4); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #63D996;">EJE CENTRAL: LIBRE</span></div>
+        </div>
+      </div>
+      <div style="border-radius: 16px; background: #F4F2EE; border: 1px solid rgba(255,255,255,0.08); padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; color: rgba(19,23,42,0.4);">LIGHT MODE</div>
+        <div style="align-self: flex-end; max-width: 78%; background: #D93030; color: #fff; border-radius: 20px 20px 6px 20px; padding: 11px 14px; font-size: 13.5px; line-height: 1.42;">¿Puedo llevar a mi familia al Zócalo ahorita?</div>
+        <div style="align-self: flex-start; max-width: 86%; background: #FFFFFF; border: 1px solid rgba(19,23,42,0.08); border-radius: 20px 20px 20px 6px; padding: 12px 14px; font-size: 13.5px; line-height: 1.5; color: #13172A;">
+          <p style="margin: 0 0 10px;">Oye, hay movimiento en el <b style="color: #D93030;">Centro Histórico</b>. No es violento pero el acceso está lento. Mejor por <b style="color: #1E9E54;">Eje Central</b>.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;"><span style="padding: 4px 8px; border-radius: 6px; background: rgba(217,48,48,0.1); border: 1px solid rgba(217,48,48,0.4); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #C42828;">ZÓCALO: EVITAR</span><span style="padding: 4px 8px; border-radius: 6px; background: rgba(46,204,113,0.12); border: 1px solid rgba(46,204,113,0.4); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #1E9E54;">EJE CENTRAL: LIBRE</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 SCREENS ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">08</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">LAS TRES PANTALLAS</span></div>
+    <h2 style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.02em; margin: 0 0 32px;">El sistema, en producto.</h2>
+
+    <div style="display: flex; flex-direction: column; gap: 56px;">
+      <!-- MAP -->
+      <div>
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px;"><span style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 22px;">Mapa</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(244,242,238,0.5);">CDMX ahora · zonas en vivo</span></div>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;"><dc-import name="LoteScreen" screen="map" mode="dark" hint-size="300px,640px"></dc-import><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: rgba(244,242,238,0.4);">DARK</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;"><dc-import name="LoteScreen" screen="map" mode="light" hint-size="300px,640px"></dc-import><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: rgba(244,242,238,0.4);">LIGHT</span></div>
+        </div>
+      </div>
+      <!-- CHAT -->
+      <div>
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px;"><span style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 22px;">El Chat</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(244,242,238,0.5);">voz directa, cálida, sin rodeos</span></div>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;"><dc-import name="LoteScreen" screen="chat" mode="dark" hint-size="300px,640px"></dc-import><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: rgba(244,242,238,0.4);">DARK</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;"><dc-import name="LoteScreen" screen="chat" mode="light" hint-size="300px,640px"></dc-import><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: rgba(244,242,238,0.4);">LIGHT</span></div>
+        </div>
+      </div>
+      <!-- ZONAS -->
+      <div>
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px;"><span style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 22px;">Zonas para ti</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(244,242,238,0.5);">recomendaciones con fuentes</span></div>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;"><dc-import name="LoteScreen" screen="zonas" mode="dark" hint-size="300px,640px"></dc-import><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: rgba(244,242,238,0.4);">DARK</span></div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;"><dc-import name="LoteScreen" screen="zonas" mode="light" hint-size="300px,640px"></dc-import><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: rgba(244,242,238,0.4);">LIGHT</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 VOICE ============ -->
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 48px 74px;">
+    <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px;"><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #D93030;">09</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; color: rgba(244,242,238,0.45);">VOZ Y TONO</span></div>
+    <h2 style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.02em; margin: 0 0 8px; max-width: 720px; text-wrap: balance;">Como el carnal que te dice las cosas al chile. Directo, sin rodeos, pero con cariño.</h2>
+    <p style="font-size: 16px; line-height: 1.6; max-width: 700px; margin: 0 0 30px; color: rgba(244,242,238,0.55);">No habla como el C5. No habla como una app corporativa. No te hace sentir falsamente seguro. Habla como el hermano mayor que te muestra la ciudad desde una distancia segura.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px;">
+      <sc-for list="{{ principles }}" as="p" hint-placeholder-count="4">
+        <div style="border-radius: 14px; background: #161B2E; border: 1px solid rgba(255,255,255,0.07); padding: 20px;">
+          <div style="font-family: 'Geist', sans-serif; font-weight: 700; font-size: 15px; color: #D6B85E;">{{ p.title }}</div>
+          <div style="font-size: 13px; line-height: 1.5; color: rgba(244,242,238,0.6); margin-top: 9px;">{{ p.body }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <sc-for list="{{ voice }}" as="v" hint-placeholder-count="3">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div style="border-radius: 14px; background: rgba(217,48,48,0.06); border: 1px solid rgba(217,48,48,0.25); padding: 18px 20px;">
+            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 11px;"><span style="width: 20px; height: 20px; border-radius: 50%; background: rgba(217,48,48,0.18); color: #EE8B86; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">✕</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #EE8B86;">ASÍ NO</span></div>
+            <div style="font-size: 14px; line-height: 1.5; color: rgba(244,242,238,0.62);">{{ v.bad }}</div>
+          </div>
+          <div style="border-radius: 14px; background: rgba(46,204,113,0.06); border: 1px solid rgba(46,204,113,0.28); padding: 18px 20px;">
+            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 11px;"><span style="width: 20px; height: 20px; border-radius: 50%; background: rgba(46,204,113,0.18); color: #63D996; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">✓</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #63D996;">ASÍ SÍ</span></div>
+            <div style="font-size: 14px; line-height: 1.5; color: #F4F2EE;">{{ v.good }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <div style="max-width: 1180px; margin: 0 auto; padding: 0 48px;"><div style="height: 1px; background: rgba(255,255,255,0.08);"></div></div>
+  <footer style="max-width: 1180px; margin: 0 auto; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+    <div style="display: flex; align-items: center; gap: 13px;">
+      <span style="width: 34px; height: 34px; border-radius: 9px; background: #D93030; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 48 48" fill="none"><g stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M15 18 8 13"/><path d="M14 23 6 22"/><path d="M15 28 8 32"/><path d="M33 18 40 13"/><path d="M34 23 42 22"/><path d="M33 28 40 32"/></g><ellipse cx="24" cy="24" rx="10.5" ry="11.5" fill="#fff"/><circle cx="20" cy="23" r="1.7" fill="#D93030"/><circle cx="28" cy="23" r="1.7" fill="#D93030"/></svg></span>
+      <div><div style="font-family: 'Geist', sans-serif; font-weight: 800; font-size: 16px;">Lote</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(244,242,238,0.4);">Sistema de Diseño · v1.0</div></div>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(244,242,238,0.4); text-align: right; line-height: 1.6;">Lote recomienda con base en fuentes públicas. Nunca garantiza.<br>CDMX · Mundial 2026 · La ciudad no para. Lote tampoco.</div>
+  </footer>
+
+  <!-- toast -->
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #1E2438; border: 1px solid rgba(255,255,255,0.14); border-radius: 12px; padding: 12px 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4F2EE; box-shadow: 0 14px 34px -8px rgba(0,0,0,0.6); z-index: 50;">Copiado: <span style="color: #D6B85E;">{{ toast }}</span></div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1280, &quot;height&quot;: 900}}">
+class Component extends DCLogic {
+  state = { toast: null };
+  doCopy(hex) {
+    try { navigator.clipboard && navigator.clipboard.writeText(hex); } catch (e) {}
+    this.setState({ toast: hex });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: null }), 1600);
+  }
+  renderVals() {
+    const palette = [
+      { name: 'Rojo Lote', hex: '#D93030', role: 'Primario · Identidad', usage: 'CTAs, logo, alertas, borders de énfasis.', on: '#FFFFFF', token: '--color-primary' },
+      { name: 'Coral Azteca', hex: '#E8563A', role: 'Secundario · Calidez', usage: 'Gradientes, hovers, acentos. Barro prehispánico.', on: '#FFFFFF', token: '--color-secondary' },
+      { name: 'Oro Mundial', hex: '#C8A84B', role: 'Acento · Datos', usage: 'Labels, timestamps, mono, precisión.', on: '#13172A', token: '--color-accent' },
+      { name: 'Tinta Profunda', hex: '#13172A', role: 'Fondo dark', usage: 'Background oscuro. Negro azulado, vivo.', on: '#F4F2EE', token: '--color-bg-dark' },
+      { name: 'Niebla', hex: '#F4F2EE', role: 'Fondo light', usage: 'Background claro. Blanco cálido, humano.', on: '#13172A', token: '--color-bg-light' }
+    ].map(c => ({ ...c, copy: () => this.doCopy(c.hex) }));
+
+    const alerts = [
+      { state: 'Tranquilo', label: 'Verde', hex: '#2ECC71', soft: 'rgba(46,204,113,0.13)', border: 'rgba(46,204,113,0.4)', meaning: 'Sin incidencias reportadas. Te puedes mover con confianza.', ui: 'Polígono verde suave en el mapa. Sin notificación.', token: '--color-safe' },
+      { state: 'Monitorear', label: 'Amarillo', hex: '#F0B429', soft: 'rgba(240,180,41,0.13)', border: 'rgba(240,180,41,0.4)', meaning: 'Actividad detectada. No urgente, pero revísalo antes de salir.', ui: 'Polígono amarillo pulsante. Notificación pasiva.', token: '--color-warn' },
+      { state: 'Evitar', label: 'Rojo', hex: '#D93030', soft: 'rgba(217,48,48,0.13)', border: 'rgba(217,48,48,0.4)', meaning: 'Riesgo activo confirmado por varias fuentes. Lote te redirige.', ui: 'Polígono rojo sólido. Alerta activa + ruta alternativa.', token: '--color-danger' }
+    ];
+
+    const typeScale = [
+      { label: 'Display', spec: 'Geist 800 · -0.02em', cssFont: "'Geist', sans-serif", weight: 800, px: '40px', sample: 'CDMX ahora' },
+      { label: 'Heading', spec: 'Geist 700 · -0.01em', cssFont: "'Geist', sans-serif", weight: 700, px: '26px', sample: 'Zonas para ti' },
+      { label: 'Body', spec: 'Geist 400 · 1.5', cssFont: "'Geist', sans-serif", weight: 400, px: '16px', sample: 'Lote responde con datos reales del mapa.' },
+      { label: 'Mono', spec: 'JetBrains Mono 500', cssFont: "'JetBrains Mono', monospace", weight: 500, px: '14px', sample: '19.4326° N · 21:51 · 6 fuentes' }
+    ];
+
+    const shapes = [
+      { r: 6, name: 'Chips', use: 'Data chips, labels de zona, filtros' },
+      { r: 12, name: 'Inputs', use: 'Campos, botones, controles, zoom' },
+      { r: 16, name: 'Cards', use: 'Tarjetas de zona, banners, paneles' },
+      { r: 20, name: 'Burbujas', use: 'Mensajes de chat (cola a 6px)' }
+    ];
+
+    const principles = [
+      { title: 'Verdad con empatía', body: 'Dice lo que necesitas escuchar, no lo que quieres. Pero primero te escucha.' },
+      { title: 'Ojos abiertos, no miedo', body: 'Muestra la realidad para que no te confíes — no para asustarte.' },
+      { title: 'Precisión sobre velocidad', body: 'Una alerta equivocada es peor que ninguna. Valida con repetición de fuentes.' },
+      { title: 'Alma local, uso universal', body: 'Habla como quien conoce la ciudad de adentro. Con calidez, sin corporativismo.' }
+    ];
+
+    const voice = [
+      { bad: 'Alerta: zona de riesgo detectada en coordenadas 19.4°N.', good: 'Oye, esa ruta tiene varios reportes de asalto ahorita. Te mando por Insurgentes, llegas igual.' },
+      { bad: 'Se han registrado incidentes en la zona centro.', good: 'Hay algo moviéndose en el centro. No es para alarmarse, pero mejor que lo sepas antes de salir.' },
+      { bad: 'Zona de riesgo. Evite el área inmediatamente.', good: 'Mejor no te metas al Centro ahorita — hay marcha y el acceso está lento. Coyoacán está tranquilo si quieres salir.' }
+    ];
+
+    return { palette, alerts, typeScale, shapes, principles, voice, toast: this.state.toast };
+  }
+}
+</script>
+</body>
+</html>
