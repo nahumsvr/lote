@@ -9,7 +9,7 @@ export function BottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 grid grid-cols-4 pb-6 pt-2 bg-[var(--nav-bg)] border-t border-[var(--line)] backdrop-blur-md">
-      <NavItem href="/" icon={<Map size={23} strokeWidth={1.8} />} label="Mapa" isActive={pathname === "/"} />
+      <NavItem href="/map" icon={<Map size={23} strokeWidth={1.8} />} label="Mapa" isActive={pathname === "/map"} />
       <NavItem href="/chat" icon={<MessageSquare size={23} strokeWidth={1.8} />} label="Chat" isActive={pathname === "/chat"} />
       <NavItem href="/zonas" icon={<MapPin size={23} strokeWidth={1.8} />} label="Zonas" isActive={pathname === "/zonas"} />
       <NavItem href="/config" icon={<Settings size={23} strokeWidth={1.8} />} label="Config" isActive={pathname === "/config"} />
