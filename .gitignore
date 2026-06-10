@@ -42,11 +42,3 @@ next-env.d.ts
 
 /agent-docs
 
-# Claude Code local settings and session state
-.claude/settings.local.json
-.claude/tasks/
-.claude/cache/
-.claude/sessions/
-
-# Optional: Ignore the main instruction file if it is local-only
-CLAUDE.md
