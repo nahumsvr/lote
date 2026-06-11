@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ChatBubble from "./_components/ChatBubble";
 import ChatInput from "./_components/ChatInput";
+import { useTranslation } from "@/lib/i18n/context";
 
 interface Chip {
   zona: string;
@@ -25,145 +26,63 @@ interface Mensaje {
   mapa?: Mapa;
 }
 
-const RESPUESTAS: Record<
-  string,
-  {
-    texto: string;
-    fuentes: number;
-    chips: Chip[];
-    mapa?: Mapa;
-  }
-> = {
-  zocalo: {
-    texto:
-      "Hay una marcha estudiantil activa en el Centro Histórico desde hace 40 min. El acceso al Zócalo está bloqueado por el norte. Te recomiendo evitarlo por ahora.",
-    fuentes: 6,
-    chips: [
-      { zona: "Zócalo · Evitar", estado: "evitar" },
-      { zona: "Eje Central · Libre", estado: "tranquilo" },
-    ],
-    mapa: { zona: "Zócalo · Centro Histórico", lat: 19.4326, lng: -99.1332 },
-  },
-  coyoacan: {
-    texto:
-      "Coyoacán está tranquilo. Sin reportes en las últimas 2 horas — buena opción para cenar con la familia.\n\nAguas al pasar por Doctores si vas en coche, hay algo moviéndose ahí.",
-    fuentes: 3,
-    chips: [
-      { zona: "Coyoacán · Tranquilo", estado: "tranquilo" },
-      { zona: "Doctores · Monitorear", estado: "monitorear" },
-    ],
-    mapa: { zona: "Coyoacán", lat: 19.349, lng: -99.162 },
-  },
-  roma: {
-    texto:
-      "Roma Norte está tranquila ahorita. Circulación normal. Eso sí, evita Álvaro Obregón después de las 10pm — hay reportes de cierres por evento.",
-    fuentes: 4,
-    chips: [{ zona: "Roma Norte · Tranquilo", estado: "tranquilo" }],
-    mapa: { zona: "Roma Norte", lat: 19.419, lng: -99.159 },
-  },
-  polanco: {
-    texto:
-      "Polanco sin novedad. Circulación normal en Presidente Masaryk. Buena zona para esta noche.",
-    fuentes: 2,
-    chips: [{ zona: "Polanco · Tranquilo", estado: "tranquilo" }],
-    mapa: { zona: "Polanco", lat: 19.4336, lng: -99.1994 },
-  },
-  condesa: {
-    texto:
-      "Condesa tranquila. Ámsterdam y Tamaulipas despejadas. Es buena noche para salir por ahí.",
-    fuentes: 3,
-    chips: [{ zona: "Condesa · Tranquilo", estado: "tranquilo" }],
-    mapa: { zona: "Condesa", lat: 19.414, lng: -99.172 },
-  },
-  tepito: {
-    texto:
-      "Tepito está en amarillo ahorita. Hay movimiento inusual reportado por 3 fuentes. No es crítico pero mejor no te aventures si no conoces la zona.",
-    fuentes: 3,
-    chips: [{ zona: "Tepito · Monitorear", estado: "monitorear" }],
-    mapa: { zona: "Tepito", lat: 19.4428, lng: -99.1242 },
-  },
-  reforma: {
-    texto:
-      "Reforma está en monitoreo. Se está juntando gente cerca del Ángel por la previa del partido. Tranquilo por ahora pero ojo si llevas niños.",
-    fuentes: 3,
-    chips: [{ zona: "Reforma · Monitorear", estado: "monitorear" }],
-    mapa: { zona: "Paseo de la Reforma", lat: 19.4269, lng: -99.1617 },
-  },
-  doctores: {
-    texto:
-      "Doctores en monitoreo. Cierre de carril en Eje Central por un evento. No es riesgo pero tu transporte puede tardar más.",
-    fuentes: 4,
-    chips: [{ zona: "Doctores · Monitorear", estado: "monitorear" }],
-    mapa: { zona: "Doctores", lat: 19.4172, lng: -99.1466 },
-  },
-  seguro: {
-    texto:
-      "Las zonas más tranquilas ahorita son Polanco, Condesa, Roma Norte y Coyoacán. Sin reportes activos en las últimas 2 horas.",
-    fuentes: 5,
-    chips: [
-      { zona: "Polanco · Tranquilo", estado: "tranquilo" },
-      { zona: "Condesa · Tranquilo", estado: "tranquilo" },
-      { zona: "Coyoacán · Tranquilo", estado: "tranquilo" },
-    ],
-  },
-  default: {
-    texto:
-      "Déjame checar los reportes de tu rumbo ahorita mismo. Dame un segundo y te digo al chile cómo está la cosa.",
-    fuentes: 0,
-    chips: [],
-  },
-};
-
-function obtenerRespuesta(texto: string) {
+function obtenerRespuesta(texto: string, responses: Record<string, { texto: string; fuentes: number; chips: Chip[]; mapa?: Mapa }>) {
   const t = texto.toLowerCase();
+  // Match both Spanish and English keywords
   if (
     t.includes("zócalo") ||
     t.includes("zocalo") ||
     t.includes("centro histórico") ||
-    t.includes("centro historico")
+    t.includes("centro historico") ||
+    t.includes("historic center") ||
+    t.includes("downtown")
   )
-    return RESPUESTAS.zocalo;
+    return responses.zocalo;
   if (t.includes("coyoacán") || t.includes("coyoacan"))
-    return RESPUESTAS.coyoacan;
-  if (t.includes("roma")) return RESPUESTAS.roma;
-  if (t.includes("polanco")) return RESPUESTAS.polanco;
-  if (t.includes("condesa")) return RESPUESTAS.condesa;
-  if (t.includes("tepito")) return RESPUESTAS.tepito;
-  if (t.includes("reforma")) return RESPUESTAS.reforma;
-  if (t.includes("doctores")) return RESPUESTAS.doctores;
+    return responses.coyoacan;
+  if (t.includes("roma")) return responses.roma;
+  if (t.includes("polanco")) return responses.polanco;
+  if (t.includes("condesa")) return responses.condesa;
+  if (t.includes("tepito")) return responses.tepito;
+  if (t.includes("reforma")) return responses.reforma;
+  if (t.includes("doctores")) return responses.doctores;
   if (
     t.includes("segur") ||
     t.includes("tranquil") ||
     t.includes("recomienda") ||
     t.includes("dónde") ||
-    t.includes("donde")
+    t.includes("donde") ||
+    t.includes("safe") ||
+    t.includes("quiet") ||
+    t.includes("calm") ||
+    t.includes("recommend") ||
+    t.includes("where")
   )
-    return RESPUESTAS.seguro;
-  return RESPUESTAS.default;
+    return responses.seguro;
+  return responses.default;
 }
 
-const MENSAJES_INICIALES: Mensaje[] = [
-  {
-    id: 1,
-    texto: "¿Puedo llevar a mi familia al Zócalo ahorita?",
-    esUsuario: true,
-  },
-  {
-    id: 2,
-    texto:
-      "Hay una marcha estudiantil activa en el Centro Histórico desde hace 40 min. El acceso al Zócalo está bloqueado por el norte. Te recomiendo evitarlo por ahora.",
-    esUsuario: false,
-    fuentes: 6,
-    tiempo: "hace 4 min",
-    chips: [
-      { zona: "Zócalo · Evitar", estado: "evitar" },
-      { zona: "Eje Central · Libre", estado: "tranquilo" },
-    ],
-    mapa: { zona: "Zócalo · Centro Histórico", lat: 19.4326, lng: -99.1332 },
-  },
-];
-
 export default function ChatPage() {
+  const t = useTranslation();
+  const responses = t.chat.responses;
+
+  const MENSAJES_INICIALES: Mensaje[] = [
+    {
+      id: 1,
+      texto: t.chat.initialQuestion,
+      esUsuario: true,
+    },
+    {
+      id: 2,
+      texto: responses.zocalo.texto,
+      esUsuario: false,
+      fuentes: responses.zocalo.fuentes,
+      tiempo: t.chat.now,
+      chips: responses.zocalo.chips,
+      mapa: responses.zocalo.mapa,
+    },
+  ];
+
   const [mensajes, setMensajes] = useState<Mensaje[]>(MENSAJES_INICIALES);
   const [cargando, setCargando] = useState(false);
 
@@ -177,13 +96,13 @@ export default function ChatPage() {
     setCargando(true);
 
     setTimeout(() => {
-      const respuesta = obtenerRespuesta(texto);
+      const respuesta = obtenerRespuesta(texto, responses);
       const mensajeLote: Mensaje = {
         id: Date.now() + 1,
         texto: respuesta.texto,
         esUsuario: false,
         fuentes: respuesta.fuentes || undefined,
-        tiempo: "ahora",
+        tiempo: t.chat.now,
         chips: respuesta.chips.length > 0 ? respuesta.chips : undefined,
         mapa: respuesta.mapa,
       };
@@ -228,7 +147,7 @@ export default function ChatPage() {
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="flex-shrink-0 bg-[#2ECC71] rounded-full w-1.5 h-1.5 animate-pulse" />
             <span className="text-[11.5px] text-white/55 truncate">
-              monitoreando CDMX
+              {t.chat.monitoring}
             </span>
           </div>
         </div>
@@ -237,9 +156,9 @@ export default function ChatPage() {
             7
           </span>
           <span className="font-mono text-[8.5px] text-[rgba(214,184,94,0.7)] leading-tight">
-            ZONAS
+            {t.chat.zonesLabel}
             <br />
-            ACTIVAS
+            {t.chat.activeLabel}
           </span>
         </div>
       </div>
@@ -249,7 +168,7 @@ export default function ChatPage() {
         <div className="flex items-center gap-3 my-1">
           <div className="flex-1 bg-white/[0.07] h-px" />
           <span className="font-mono text-[9.5px] text-white/35 tracking-widest">
-            HOY · MAR 9 JUN
+            {t.chat.today}
           </span>
           <div className="flex-1 bg-white/[0.07] h-px" />
         </div>

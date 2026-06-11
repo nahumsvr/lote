@@ -2,6 +2,7 @@
 import { useRef, useState, useEffect } from "react";
 import MapWrapper from "./_components/MapWrapper";
 import { Signal, ChevronDown } from "lucide-react";
+import { useTranslation } from "@/lib/i18n/context";
 
 const MOCK_ZONES = [
   {
@@ -55,37 +56,9 @@ const MOCK_ZONES = [
   },
 ];
 
-const ALERTS = [
-  {
-    id: 1,
-    kind: "evitar",
-    label: "EVITAR · CENTRO HISTÓRICO",
-    time: "hace 4 min",
-    sources: "6 fuentes",
-    cta: "Ver ruta segura",
-    body: 'Aguas con el Centro — hay marcha en <b class="font-semibold">5 de Febrero</b> y el acceso al Zócalo está cerrado por el norte. Mejor déjalo para mañana.',
-  },
-  {
-    id: 2,
-    kind: "monitorear",
-    label: "MONITOREAR · DOCTORES",
-    time: "hace 12 min",
-    sources: "4 fuentes",
-    cta: "Ver detalles",
-    body: 'Cierre de carril en <b class="font-semibold">Eje Central</b> por un evento. No es riesgo, pero tu Uber puede tardar. Tenlo en cuenta si vas con prisa.',
-  },
-  {
-    id: 3,
-    kind: "monitorear",
-    label: "MONITOREAR · REFORMA",
-    time: "hace 9 min",
-    sources: "3 fuentes",
-    cta: "Ver detalles",
-    body: 'Se está juntando gente en el <b class="font-semibold">Ángel</b> por la previa del partido. Tranquilo por ahora, pero ojo si llevas niños.',
-  },
-];
-
 export default function MapaPage() {
+  const t = useTranslation();
+  const ALERTS = t.map.alerts;
   const [activeIdx, setActiveIdx] = useState(0);
   const [showCarousel, setShowCarousel] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -110,13 +83,13 @@ export default function MapaPage() {
         <div className="flex justify-between items-start">
           <div>
             <div className="font-extrabold text-[var(--text)] text-3xl leading-none tracking-tight">
-              CDMX <span className="text-[var(--accent)]">ahora</span>
+              CDMX <span className="text-[var(--accent)]">{t.map.titleAccent}</span>
             </div>
           </div>
           <div className="flex items-center gap-[7px] bg-[rgba(46,204,113,0.1)] px-3 py-1.5 border border-[rgba(46,204,113,0.4)] rounded-full">
             <span className="bg-[var(--green)] rounded-full w-[7px] h-[7px] animate-pulseDot"></span>
             <span className="font-mono font-medium text-[10.5px] text-[var(--greenT)] tracking-[0.08em]">
-              EN VIVO
+              {t.map.live}
             </span>
           </div>
         </div>
@@ -139,10 +112,10 @@ export default function MapaPage() {
               "0 4px 24px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07)",
           }}
         >
-          <Stat count="4" label="SEGURAS" color="var(--z-green-label)" />
-          <Stat count="2" label="MONITOREAR" color="var(--z-yellow-label)" />
-          <Stat count="1" label="EVITAR" color="var(--redT)" />
-          <Stat count="14" label="REPORTES" color="var(--gold)" />
+          <Stat count="4" label={t.map.stats.clear} color="var(--z-green-label)" />
+          <Stat count="2" label={t.map.stats.watch} color="var(--z-yellow-label)" />
+          <Stat count="1" label={t.map.stats.avoid} color="var(--redT)" />
+          <Stat count="14" label={t.map.stats.reports} color="var(--gold)" />
         </div>
 
         {/* Alert Carousel — fully hides when closed */}
@@ -212,7 +185,7 @@ export default function MapaPage() {
                       <b className="font-normal text-[var(--gold)]">
                         {alert.sources}
                       </b>{" "}
-                      confirman
+                      {t.map.confirmed}
                     </span>
                   </div>
                   <button
