@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./_components/shared/NavBar";
+import type { Metadata, Viewport } from "next";
+import { BottomNav } from "./_components/shared/BottomNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +17,15 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lote - Zonas",
-  description: "Zonas seguras y de riesgo en CDMX",
+  title: "Lote — CDMX en tiempo real",
+  description: "Agente de movilidad urbana en tiempo real para la Ciudad de México.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
