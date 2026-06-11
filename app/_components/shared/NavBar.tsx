@@ -3,13 +3,15 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "@/lib/i18n/context";
 
 export default function NavBar() {
   const pathname = usePathname();
+  const t = useTranslation();
 
   const tabs = [
     {
-      name: "Mapa",
+      name: t.nav.map,
       path: "/map",
       icon: (
         <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="transition-colors duration-300">
@@ -19,7 +21,7 @@ export default function NavBar() {
       ),
     },
     {
-      name: "Chat",
+      name: t.nav.chat,
       path: "/chat",
       icon: (
         <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="transition-colors duration-300">
@@ -28,7 +30,7 @@ export default function NavBar() {
       ),
     },
     {
-      name: "Zonas",
+      name: t.nav.zones,
       path: "/zonas",
       icon: (
         <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="transition-colors duration-300">
@@ -37,7 +39,7 @@ export default function NavBar() {
       ),
     },
     {
-      name: "Config",
+      name: t.nav.settings,
       path: "/config",
       icon: (
         <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="transition-colors duration-300">
@@ -65,7 +67,7 @@ export default function NavBar() {
             (tab.path === "/mapa" && pathname === "/");
           return (
             <Link
-              key={tab.name}
+              key={tab.path}
               href={tab.path}
               className={`relative flex flex-col items-center justify-center gap-[5px] h-full sm:w-[60px] transition-colors duration-300 ${isActive
                 ? "text-primary"

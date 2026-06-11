@@ -2,6 +2,7 @@
 import { useRef, useState, useEffect } from "react";
 import MapWrapper from "./_components/MapWrapper";
 import { Signal, ChevronDown } from "lucide-react";
+import { useTranslation } from "@/lib/i18n/context";
 
 const MOCK_ZONES = [
   { name: "POLANCO", lat: 19.4336, lng: -99.1994, radius: 1200, status: "tranquilo" as const },
@@ -13,39 +14,11 @@ const MOCK_ZONES = [
   { name: "COYOACÁN", lat: 19.349, lng: -99.162, radius: 1600, status: "tranquilo" as const },
 ];
 
-const ALERTS = [
-  {
-    id: 1,
-    kind: "evitar",
-    label: "EVITAR · CENTRO HISTÓRICO",
-    time: "hace 4 min",
-    sources: "6 fuentes",
-    cta: "Ver ruta segura",
-    body: 'Aguas con el Centro — hay marcha en <b class="font-semibold">5 de Febrero</b> y el acceso al Zócalo está cerrado por el norte. Mejor déjalo para mañana.',
-  },
-  {
-    id: 2,
-    kind: "monitorear",
-    label: "MONITOREAR · DOCTORES",
-    time: "hace 12 min",
-    sources: "4 fuentes",
-    cta: "Ver detalles",
-    body: 'Cierre de carril en <b class="font-semibold">Eje Central</b> por un evento. No es riesgo, pero tu Uber puede tardar. Tenlo en cuenta si vas con prisa.',
-  },
-  {
-    id: 3,
-    kind: "monitorear",
-    label: "MONITOREAR · REFORMA",
-    time: "hace 9 min",
-    sources: "3 fuentes",
-    cta: "Ver detalles",
-    body: 'Se está juntando gente en el <b class="font-semibold">Ángel</b> por la previa del partido. Tranquilo por ahora, pero ojo si llevas niños.',
-  },
-];
-
 const MAP_CENTER: [number, number] = [19.419, -99.159];
 
 export default function MapaPage() {
+  const t = useTranslation();
+  const ALERTS = t.map.alerts;
   const [activeIdx, setActiveIdx] = useState(0);
   const [showCarousel, setShowCarousel] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -70,14 +43,14 @@ export default function MapaPage() {
         <div className="flex justify-between items-start">
           <div>
             <div className="font-extrabold text-[var(--color-text)] text-3xl leading-none tracking-tight">
-              CDMX <span className="text-[var(--color-accent)]">ahora</span>
+              CDMX <span className="text-[var(--color-accent)]">{t.map.titleAccent}</span>
             </div>
           </div>
-          {/* Tag EN VIVO Dinámica */}
+          {/* Tag EN VIVO Dinámica (Con soporte para modo oscuro) */}
           <div className="flex items-center gap-[7px] bg-emerald-500/10 dark:bg-emerald-500/20 px-3 py-1.5 border border-emerald-500/30 rounded-full">
             <span className="bg-emerald-500 rounded-full w-[7px] h-[7px] animate-pulse"></span>
             <span className="font-mono font-medium text-[10.5px] text-emerald-600 dark:text-emerald-400 tracking-[0.08em]">
-              EN VIVO
+              {t.map.live}
             </span>
           </div>
         </div>
@@ -93,10 +66,10 @@ export default function MapaPage() {
         <div
           className="top-[14px] right-[14px] left-[12px] z-[500] absolute grid grid-cols-4 px-[6px] py-[10px] border border-black/5 dark:border-white/10 rounded-[16px] bg-[var(--color-surface)]/80 dark:bg-[#13172A]/70 backdrop-blur-xl shadow-lg"
         >
-          <Stat count="4" label="SEGURAS" color="text-emerald-500" />
-          <Stat count="2" label="MONITOREAR" color="text-amber-500" />
-          <Stat count="1" label="EVITAR" color="text-[var(--color-primary)]" />
-          <Stat count="14" label="REPORTES" color="text-amber-600 dark:text-[var(--color-accent)]" />
+          <Stat count="4" label={t.map.stats.clear} color="text-emerald-500" />
+          <Stat count="2" label={t.map.stats.watch} color="text-amber-500" />
+          <Stat count="1" label={t.map.stats.avoid} color="text-[var(--color-primary)]" />
+          <Stat count="14" label={t.map.stats.reports} color="text-amber-600 dark:text-[var(--color-accent)]" />
         </div>
 
         {/* Alert Carousel — Se adapta al tema claro/oscuro automáticamente */}
@@ -122,7 +95,7 @@ export default function MapaPage() {
             className="flex pb-2 overflow-x-auto snap-mandatory snap-x scrollbar-none"
             style={{ scrollSnapType: "x mandatory" }}
           >
-            {ALERTS.map((alert, i) => (
+            {ALERTS.map((alert: any, i: number) => (
               <div
                 key={alert.id}
                 className="flex-[0_0_100%] px-[18px] pb-[6px] min-w-full"
@@ -159,7 +132,7 @@ export default function MapaPage() {
                       <b className="font-semibold text-amber-600 dark:text-amber-400">
                         {alert.sources}
                       </b>{" "}
-                      confirman
+                      {t.map.confirmed}
                     </span>
                   </div>
                   <button
@@ -177,7 +150,7 @@ export default function MapaPage() {
 
           {/* Indicadores de Puntos */}
           <div className="flex justify-center items-center gap-[6px] pt-[4px] pb-[10px]">
-            {ALERTS.map((_, i) => (
+            {ALERTS.map((_: any, i: number) => (
               <button
                 key={i}
                 onClick={() => {

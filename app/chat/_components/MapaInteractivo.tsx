@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { useTranslation } from "@/lib/i18n/context"
 import "leaflet/dist/leaflet.css"
 
 interface Zona {
@@ -37,6 +38,7 @@ export default function MapaInteractivo({ zona, lat, lng }: MapaInteractivoProps
     const mapInstanceRef = useRef<unknown>(null)
     const tileLayerRef = useRef<unknown>(null)
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+    const t = useTranslation()
 
     useEffect(() => {
         if (!mapRef.current || mapInstanceRef.current) return
@@ -147,7 +149,7 @@ export default function MapaInteractivo({ zona, lat, lng }: MapaInteractivoProps
                         <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7Z" />
                         <circle cx="12" cy="9" r="2.5" />
                     </svg>
-                    Ver en Google Maps
+                    {t.chat.viewOnGoogleMaps}
                 </a>
             </div>
         </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslation } from "@/lib/i18n/context"
 
 interface ChatInputProps {
     onEnviar: (mensaje: string) => void
@@ -8,6 +9,7 @@ interface ChatInputProps {
 
 export default function ChatInput({ onEnviar }: ChatInputProps) {
     const [texto, setTexto] = useState("")
+    const t = useTranslation()
 
     const handleEnviar = () => {
         if (!texto.trim()) return
@@ -23,7 +25,7 @@ export default function ChatInput({ onEnviar }: ChatInputProps) {
                     value={texto}
                     onChange={(e) => setTexto(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleEnviar()}
-                    placeholder="Pregúntale a Lote…"
+                    placeholder={t.chat.placeholder}
                     className="flex-1 bg-transparent outline-none text-[14px] text-[var(--color-text)] placeholder:text-black/40 dark:placeholder:text-white/30 font-[family-name:var(--font-geist-sans)] transition-colors duration-300"
                 />
                 <svg className="text-black/40 dark:text-white/40 transition-colors duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
