@@ -35,6 +35,7 @@ const COLORES = {
 export default function MapaInteractivo({ zona, lat, lng }: MapaInteractivoProps) {
     const mapRef = useRef<HTMLDivElement>(null)
     const mapInstanceRef = useRef<unknown>(null)
+    const tileLayerRef = useRef<unknown>(null)
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 
     useEffect(() => {
@@ -53,13 +54,25 @@ export default function MapaInteractivo({ zona, lat, lng }: MapaInteractivoProps
 
             mapInstanceRef.current = map
 
-            L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-                {
-                    attribution: "©OpenStreetMap ©CartoDB",
-                    maxZoom: 19,
+            const isDark = document.documentElement.classList.contains("dark");
+            const getTileUrl = (dark: boolean) => dark
+                ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+
+            const tiles = L.tileLayer(getTileUrl(isDark), {
+                attribution: "©OpenStreetMap ©CartoDB",
+                maxZoom: 19,
+            }).addTo(map)
+
+            tileLayerRef.current = tiles
+
+            const observer = new MutationObserver(() => {
+                const currentlyDark = document.documentElement.classList.contains("dark");
+                if (tileLayerRef.current) {
+                    (tileLayerRef.current as any).setUrl(getTileUrl(currentlyDark));
                 }
-            ).addTo(map)
+            });
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
             ZONAS.forEach((z) => {
                 const col = COLORES[z.status]
@@ -99,28 +112,38 @@ export default function MapaInteractivo({ zona, lat, lng }: MapaInteractivoProps
     }, [lat, lng, zona])
 
     return (
-        <div className="mt-3 rounded-xl overflow-hidden border border-white/[0.08]">
+        <div className="mt-3 rounded-xl overflow-hidden border border-black/10 dark:border-white/[0.08] transition-colors duration-300">
+            {/* 🎯 Ajustes de CSS en línea para que los tooltips se adapten al tema oscuro/claro */}
             <style>{`
-        .lote-tooltip {
-          background: rgba(19,23,42,0.85);
-          border: 1px solid rgba(255,255,255,0.1);
-          color: rgba(244,242,238,0.8);
-          font-family: monospace;
-          font-size: 9px;
-          font-weight: 600;
-          letter-spacing: 0.08em;
-          padding: 2px 6px;
-          border-radius: 4px;
-          box-shadow: none;
-        }
-        .lote-tooltip::before { display: none; }
-        .leaflet-container { background: #0E1322; }
-      `}</style>
+                .lote-tooltip {
+                    background: rgba(255,255,255,0.9);
+                    border: 1px solid rgba(0,0,0,0.1);
+                    color: #333;
+                    font-family: monospace;
+                    font-size: 9px;
+                    font-weight: 600;
+                    letter-spacing: 0.08em;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }
+                .dark .lote-tooltip {
+                    background: rgba(19,23,42,0.85);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    color: rgba(244,242,238,0.8);
+                    box-shadow: none;
+                }
+                .lote-tooltip::before { display: none; }
+                .leaflet-container { background: #E5E7EB; }
+                .dark .leaflet-container { background: #0E1322; }
+            `}</style>
+
             <div ref={mapRef} style={{ height: "180px", width: "100%" }} />
-            <div className="flex items-center justify-between px-3 py-2 bg-[#1E2438] border-t border-white/[0.06]">
-                <span className="font-mono text-[10.5px] text-[#D6B85E]">{zona}</span>
-                <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#D93030] text-white text-[11px] font-semibold">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+
+            <div className="flex items-center justify-between px-3 py-2 bg-[var(--color-surface)] dark:bg-[#1E2438] border-t border-black/5 dark:border-white/[0.06] transition-colors duration-300">
+                <span className="font-mono text-[10.5px] text-amber-600 dark:text-[#D6B85E] transition-colors duration-300">{zona}</span>
+                <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#D93030] hover:bg-[#b82525] text-white text-[11px] font-semibold transition-colors duration-300">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7Z" />
                         <circle cx="12" cy="9" r="2.5" />
                     </svg>

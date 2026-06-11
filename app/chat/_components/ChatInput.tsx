@@ -16,17 +16,17 @@ export default function ChatInput({ onEnviar }: ChatInputProps) {
     }
 
     return (
-        <div className="flex items-center gap-2.5 px-4 py-3 border-t border-white/[0.07] bg-[#13172A]">
-            <div className="flex-1 flex items-center gap-2.5 h-11 rounded-xl px-4 bg-black/30 border border-white/[0.07]">
+        <div className="flex items-center gap-2.5 px-4 py-3 border-t border-black/5 dark:border-white/[0.07] bg-[var(--color-bg)] transition-colors duration-300">
+            <div className="flex-1 flex items-center gap-2.5 h-11 rounded-xl px-4 bg-black/5 dark:bg-black/30 border border-black/10 dark:border-white/[0.07] transition-colors duration-300">
                 <input
                     type="text"
                     value={texto}
                     onChange={(e) => setTexto(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleEnviar()}
                     placeholder="Pregúntale a Lote…"
-                    className="flex-1 bg-transparent outline-none text-[14px] text-[#F4F2EE] placeholder:text-white/30 font-[family-name:var(--font-geist-sans)]"
+                    className="flex-1 bg-transparent outline-none text-[14px] text-[var(--color-text)] placeholder:text-black/40 dark:placeholder:text-white/30 font-[family-name:var(--font-geist-sans)] transition-colors duration-300"
                 />
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(244,242,238,0.4)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="text-black/40 dark:text-white/40 transition-colors duration-300" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="9" y="3" width="6" height="11" rx="3" />
                     <path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
                 </svg>

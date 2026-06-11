@@ -1,8 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
-// Define the props interface here since we need to pass them down
 interface ZoneProps {
   name: string;
   lat: number;
@@ -19,5 +20,16 @@ export interface MapProps {
 const Map = dynamic(() => import("./Map"), { ssr: false });
 
 export default function MapWrapper(props: MapProps) {
-  return <Map {...props} />;
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="w-full h-full min-h-[280px] bg-[var(--color-bg)] animate-pulse rounded-[16px]" />;
+  }
+
+  return <Map {...props} theme={resolvedTheme} />;
 }

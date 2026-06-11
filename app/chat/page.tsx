@@ -193,9 +193,9 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col bg-[#13172A] h-dvh overflow-hidden">
+    <div className="flex flex-col bg-[var(--color-bg)] h-dvh overflow-hidden transition-colors duration-300">
       {/* Header */}
-      <div className="flex items-center gap-3 px-5 py-3 border-white/[0.07] border-b">
+      <div className="flex items-center gap-3 px-5 py-3 border-black/5 dark:border-white/[0.07] border-b transition-colors duration-300">
         <div
           className="relative flex flex-shrink-0 justify-center items-center rounded-[13px] w-10 h-10"
           style={{ background: "linear-gradient(150deg, #E8563A, #D93030)" }}
@@ -222,21 +222,21 @@ export default function ChatPage() {
           </svg>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-semibold text-[#F4F2EE] text-[17px] leading-tight">
+          <div className="font-semibold text-[var(--color-text)] text-[17px] leading-tight transition-colors duration-300">
             Lote
           </div>
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="flex-shrink-0 bg-[#2ECC71] rounded-full w-1.5 h-1.5 animate-pulse" />
-            <span className="text-[11.5px] text-white/55 truncate">
+            <span className="text-[11.5px] text-black/55 dark:text-white/55 truncate transition-colors duration-300">
               monitoreando CDMX
             </span>
           </div>
         </div>
-        <div className="flex flex-shrink-0 items-center gap-1.5 bg-[rgba(214,184,94,0.1)] px-2.5 py-1.5 border border-[rgba(214,184,94,0.28)] rounded-full">
-          <span className="font-mono font-bold text-[#D6B85E] text-[10.5px]">
+        <div className="flex flex-shrink-0 items-center gap-1.5 bg-amber-500/10 dark:bg-[rgba(214,184,94,0.1)] px-2.5 py-1.5 border border-amber-500/20 dark:border-[rgba(214,184,94,0.28)] rounded-full transition-colors duration-300">
+          <span className="font-mono font-bold text-amber-600 dark:text-[#D6B85E] text-[10.5px] transition-colors duration-300">
             7
           </span>
-          <span className="font-mono text-[8.5px] text-[rgba(214,184,94,0.7)] leading-tight">
+          <span className="font-mono text-[8.5px] text-amber-700/70 dark:text-[rgba(214,184,94,0.7)] leading-tight transition-colors duration-300">
             ZONAS
             <br />
             ACTIVAS
@@ -244,14 +244,14 @@ export default function ChatPage() {
         </div>
       </div>
 
-      {/* Mensajes */}
+      {/* Messages */}
       <div className="flex flex-col flex-1 gap-3 px-4 py-4 overflow-y-auto">
         <div className="flex items-center gap-3 my-1">
-          <div className="flex-1 bg-white/[0.07] h-px" />
-          <span className="font-mono text-[9.5px] text-white/35 tracking-widest">
+          <div className="flex-1 bg-black/5 dark:bg-white/[0.07] h-px transition-colors duration-300" />
+          <span className="font-mono text-[9.5px] text-black/35 dark:text-white/35 tracking-widest transition-colors duration-300">
             HOY · MAR 9 JUN
           </span>
-          <div className="flex-1 bg-white/[0.07] h-px" />
+          <div className="flex-1 bg-black/5 dark:bg-white/[0.07] h-px transition-colors duration-300" />
         </div>
 
         {mensajes.map((m) => (
@@ -268,10 +268,10 @@ export default function ChatPage() {
 
         {cargando && (
           <div className="self-start">
-            <div className="flex items-center gap-1.5 bg-[#1E2438] px-4 py-3 border border-white/[0.06] rounded-[20px_20px_20px_6px]">
-              <span className="bg-white/40 rounded-full w-2 h-2 animate-bounce [animation-delay:0ms]" />
-              <span className="bg-white/40 rounded-full w-2 h-2 animate-bounce [animation-delay:150ms]" />
-              <span className="bg-white/40 rounded-full w-2 h-2 animate-bounce [animation-delay:300ms]" />
+            <div className="flex items-center gap-1.5 bg-[var(--color-surface)] dark:bg-[#1E2438] px-4 py-3 border border-black/5 dark:border-white/[0.06] rounded-[20px_20px_20px_6px] transition-colors duration-300">
+              <span className="bg-black/30 dark:bg-white/40 rounded-full w-2 h-2 animate-bounce [animation-delay:0ms]" />
+              <span className="bg-black/30 dark:bg-white/40 rounded-full w-2 h-2 animate-bounce [animation-delay:150ms]" />
+              <span className="bg-black/30 dark:bg-white/40 rounded-full w-2 h-2 animate-bounce [animation-delay:300ms]" />
             </div>
           </div>
         )}
