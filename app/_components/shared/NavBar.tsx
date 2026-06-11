@@ -3,13 +3,15 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "@/lib/i18n/context";
 
 export default function NavBar() {
   const pathname = usePathname();
+  const t = useTranslation();
 
   const tabs = [
     {
-      name: "Mapa",
+      name: t.nav.map,
       path: "/map",
       icon: (
         <svg
@@ -28,7 +30,7 @@ export default function NavBar() {
       ),
     },
     {
-      name: "Chat",
+      name: t.nav.chat,
       path: "/chat",
       icon: (
         <svg
@@ -46,7 +48,7 @@ export default function NavBar() {
       ),
     },
     {
-      name: "Zonas",
+      name: t.nav.zones,
       path: "/zonas",
       icon: (
         <svg
@@ -64,7 +66,7 @@ export default function NavBar() {
       ),
     },
     {
-      name: "Config",
+      name: t.nav.settings,
       path: "/config",
       icon: (
         <svg
@@ -101,7 +103,7 @@ export default function NavBar() {
             (tab.path === "/mapa" && pathname === "/");
           return (
             <Link
-              key={tab.name}
+              key={tab.path}
               href={tab.path}
               className={`relative flex flex-col items-center justify-center gap-[5px] h-full sm:w-[60px] ${isActive ? "text-primary" : "text-foreground/40 hover:text-foreground transition-colors"}`}
             >

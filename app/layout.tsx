@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./_components/shared/NavBar";
+import { LocaleProvider } from "@/lib/i18n/context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lote — CDMX en tiempo real",
+  title: "Lote — CDMX in real time",
   description:
-    "Agente de movilidad urbana en tiempo real para la Ciudad de México.",
+    "Real-time urban mobility agent for Mexico City.",
 };
 
 export const viewport: Viewport = {
@@ -34,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="es"
+      lang="en"
       className={`${geistSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex flex-col bg-background h-[100dvh] overflow-hidden text-foreground">
@@ -61,7 +62,7 @@ export default function RootLayout({
         {/* Main Content Area */}
         <div className="z-10 relative flex flex-col flex-1 mx-auto w-full max-w-2xl overflow-hidden">
           <div className="relative flex flex-col flex-1 overflow-hidden">
-            {children}
+            <LocaleProvider>{children}</LocaleProvider>
           </div>
         </div>
 
