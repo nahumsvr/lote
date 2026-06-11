@@ -1,6 +1,33 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 
 export const HowItWorksSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+          } else {
+            entry.target.classList.remove("in-view");
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -40px 0px",
+      }
+    );
+
+    const cards = containerRef.current?.querySelectorAll(".zone-card");
+    cards?.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="sec" id="how">
       <div className="wrap">
@@ -18,7 +45,7 @@ export const HowItWorksSection = () => {
             keep moving.
           </p>
         </div>
-        <div className="zones">
+        <div className="zones" ref={containerRef}>
           <div className="zone-card green reveal">
             <span className="bar" />
             <span className="glyph">
