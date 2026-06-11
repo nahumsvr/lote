@@ -3,17 +3,8 @@
 import { useState } from "react";
 import ChatBubble from "./_components/ChatBubble";
 import ChatInput from "./_components/ChatInput";
-
-interface Chip {
-  zona: string;
-  estado: "tranquilo" | "monitorear" | "evitar";
-}
-
-interface Mapa {
-  zona: string;
-  lat: number;
-  lng: number;
-}
+import { enviarMensaje } from "@/actions/chat/send";
+import type { Chip, Mapa } from "@/actions/chat/send";
 
 interface Mensaje {
   id: number;
@@ -23,123 +14,6 @@ interface Mensaje {
   tiempo?: string;
   chips?: Chip[];
   mapa?: Mapa;
-}
-
-const RESPUESTAS: Record<
-  string,
-  {
-    texto: string;
-    fuentes: number;
-    chips: Chip[];
-    mapa?: Mapa;
-  }
-> = {
-  zocalo: {
-    texto:
-      "Hay una marcha estudiantil activa en el Centro Histórico desde hace 40 min. El acceso al Zócalo está bloqueado por el norte. Te recomiendo evitarlo por ahora.",
-    fuentes: 6,
-    chips: [
-      { zona: "Zócalo · Evitar", estado: "evitar" },
-      { zona: "Eje Central · Libre", estado: "tranquilo" },
-    ],
-    mapa: { zona: "Zócalo · Centro Histórico", lat: 19.4326, lng: -99.1332 },
-  },
-  coyoacan: {
-    texto:
-      "Coyoacán está tranquilo. Sin reportes en las últimas 2 horas — buena opción para cenar con la familia.\n\nAguas al pasar por Doctores si vas en coche, hay algo moviéndose ahí.",
-    fuentes: 3,
-    chips: [
-      { zona: "Coyoacán · Tranquilo", estado: "tranquilo" },
-      { zona: "Doctores · Monitorear", estado: "monitorear" },
-    ],
-    mapa: { zona: "Coyoacán", lat: 19.349, lng: -99.162 },
-  },
-  roma: {
-    texto:
-      "Roma Norte está tranquila ahorita. Circulación normal. Eso sí, evita Álvaro Obregón después de las 10pm — hay reportes de cierres por evento.",
-    fuentes: 4,
-    chips: [{ zona: "Roma Norte · Tranquilo", estado: "tranquilo" }],
-    mapa: { zona: "Roma Norte", lat: 19.419, lng: -99.159 },
-  },
-  polanco: {
-    texto:
-      "Polanco sin novedad. Circulación normal en Presidente Masaryk. Buena zona para esta noche.",
-    fuentes: 2,
-    chips: [{ zona: "Polanco · Tranquilo", estado: "tranquilo" }],
-    mapa: { zona: "Polanco", lat: 19.4336, lng: -99.1994 },
-  },
-  condesa: {
-    texto:
-      "Condesa tranquila. Ámsterdam y Tamaulipas despejadas. Es buena noche para salir por ahí.",
-    fuentes: 3,
-    chips: [{ zona: "Condesa · Tranquilo", estado: "tranquilo" }],
-    mapa: { zona: "Condesa", lat: 19.414, lng: -99.172 },
-  },
-  tepito: {
-    texto:
-      "Tepito está en amarillo ahorita. Hay movimiento inusual reportado por 3 fuentes. No es crítico pero mejor no te aventures si no conoces la zona.",
-    fuentes: 3,
-    chips: [{ zona: "Tepito · Monitorear", estado: "monitorear" }],
-    mapa: { zona: "Tepito", lat: 19.4428, lng: -99.1242 },
-  },
-  reforma: {
-    texto:
-      "Reforma está en monitoreo. Se está juntando gente cerca del Ángel por la previa del partido. Tranquilo por ahora pero ojo si llevas niños.",
-    fuentes: 3,
-    chips: [{ zona: "Reforma · Monitorear", estado: "monitorear" }],
-    mapa: { zona: "Paseo de la Reforma", lat: 19.4269, lng: -99.1617 },
-  },
-  doctores: {
-    texto:
-      "Doctores en monitoreo. Cierre de carril en Eje Central por un evento. No es riesgo pero tu transporte puede tardar más.",
-    fuentes: 4,
-    chips: [{ zona: "Doctores · Monitorear", estado: "monitorear" }],
-    mapa: { zona: "Doctores", lat: 19.4172, lng: -99.1466 },
-  },
-  seguro: {
-    texto:
-      "Las zonas más tranquilas ahorita son Polanco, Condesa, Roma Norte y Coyoacán. Sin reportes activos en las últimas 2 horas.",
-    fuentes: 5,
-    chips: [
-      { zona: "Polanco · Tranquilo", estado: "tranquilo" },
-      { zona: "Condesa · Tranquilo", estado: "tranquilo" },
-      { zona: "Coyoacán · Tranquilo", estado: "tranquilo" },
-    ],
-  },
-  default: {
-    texto:
-      "Déjame checar los reportes de tu rumbo ahorita mismo. Dame un segundo y te digo al chile cómo está la cosa.",
-    fuentes: 0,
-    chips: [],
-  },
-};
-
-function obtenerRespuesta(texto: string) {
-  const t = texto.toLowerCase();
-  if (
-    t.includes("zócalo") ||
-    t.includes("zocalo") ||
-    t.includes("centro histórico") ||
-    t.includes("centro historico")
-  )
-    return RESPUESTAS.zocalo;
-  if (t.includes("coyoacán") || t.includes("coyoacan"))
-    return RESPUESTAS.coyoacan;
-  if (t.includes("roma")) return RESPUESTAS.roma;
-  if (t.includes("polanco")) return RESPUESTAS.polanco;
-  if (t.includes("condesa")) return RESPUESTAS.condesa;
-  if (t.includes("tepito")) return RESPUESTAS.tepito;
-  if (t.includes("reforma")) return RESPUESTAS.reforma;
-  if (t.includes("doctores")) return RESPUESTAS.doctores;
-  if (
-    t.includes("segur") ||
-    t.includes("tranquil") ||
-    t.includes("recomienda") ||
-    t.includes("dónde") ||
-    t.includes("donde")
-  )
-    return RESPUESTAS.seguro;
-  return RESPUESTAS.default;
 }
 
 const MENSAJES_INICIALES: Mensaje[] = [
@@ -167,7 +41,7 @@ export default function ChatPage() {
   const [mensajes, setMensajes] = useState<Mensaje[]>(MENSAJES_INICIALES);
   const [cargando, setCargando] = useState(false);
 
-  const handleEnviar = (texto: string) => {
+  const handleEnviar = async (texto: string) => {
     const nuevoMensaje: Mensaje = {
       id: Date.now(),
       texto,
@@ -176,20 +50,21 @@ export default function ChatPage() {
     setMensajes((prev) => [...prev, nuevoMensaje]);
     setCargando(true);
 
-    setTimeout(() => {
-      const respuesta = obtenerRespuesta(texto);
+    try {
+      const respuesta = await enviarMensaje(texto);
       const mensajeLote: Mensaje = {
         id: Date.now() + 1,
         texto: respuesta.texto,
         esUsuario: false,
-        fuentes: respuesta.fuentes || undefined,
+        fuentes: respuesta.fuentes > 0 ? respuesta.fuentes : undefined,
         tiempo: "ahora",
         chips: respuesta.chips.length > 0 ? respuesta.chips : undefined,
-        mapa: respuesta.mapa,
+        mapa: respuesta.mapa ?? undefined,
       };
       setMensajes((prev) => [...prev, mensajeLote]);
+    } finally {
       setCargando(false);
-    }, 1200);
+    }
   };
 
   return (
