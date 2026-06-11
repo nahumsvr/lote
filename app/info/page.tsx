@@ -289,25 +289,62 @@ export default function InfoPage() {
               <span className="float-chip yellow c3"><span className="d" />DOCTORES · WATCH</span>
               <div className="phone-frame">
                 <div className="notch" />
-                <div className="screen" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  {/* Map screen placeholder — coloured zones */}
-                  <svg width="312" height="676" viewBox="0 0 312 676" fill="none">
-                    <rect width="312" height="676" fill="#0E1322" />
-                    <rect x="30" y="180" width="110" height="90" rx="12" fill="rgba(46,204,113,0.18)" stroke="rgba(46,204,113,0.5)" strokeWidth="1" />
-                    <rect x="160" y="200" width="120" height="80" rx="12" fill="rgba(217,48,48,0.22)" stroke="rgba(217,48,48,0.6)" strokeWidth="1" />
-                    <rect x="50" y="290" width="130" height="70" rx="12" fill="rgba(240,180,41,0.17)" stroke="rgba(240,180,41,0.5)" strokeWidth="1" />
-                    <circle cx="156" cy="338" r="8" fill="#E8563A" />
-                    <circle cx="156" cy="338" r="14" fill="none" stroke="rgba(232,86,58,0.4)" strokeWidth="1.5" />
-                    {/* Radar sweep */}
-                    <circle cx="156" cy="338" r="60" fill="none" stroke="rgba(232,86,58,0.08)" strokeWidth="1" />
-                    <circle cx="156" cy="338" r="90" fill="none" stroke="rgba(232,86,58,0.05)" strokeWidth="1" />
-                    {/* Alert card at bottom */}
-                    <rect x="14" y="530" width="284" height="80" rx="16" fill="rgba(30,36,56,0.95)" stroke="rgba(217,48,48,0.4)" strokeWidth="1" />
-                    <circle cx="36" cy="560" r="8" fill="#D93030" />
-                    <rect x="52" y="550" width="80" height="8" rx="4" fill="rgba(244,242,238,0.7)" />
-                    <rect x="52" y="566" width="120" height="6" rx="3" fill="rgba(244,242,238,0.3)" />
-                    <rect x="52" y="578" width="90" height="6" rx="3" fill="rgba(244,242,238,0.3)" />
-                  </svg>
+                <div className="screen" style={{ display: "flex", flexDirection: "column", background: "#0E1322", overflow: "hidden" }}>
+                  {/* App header */}
+                  <div style={{ padding: "52px 18px 10px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                    <div style={{ fontWeight: 800, fontSize: 22, color: "#F4F2EE", letterSpacing: "-0.02em", lineHeight: 1 }}>CDMX <span style={{ color: "#D93030" }}>ahora</span></div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(46,204,113,0.1)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: 999, padding: "4px 9px" }}>
+                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2ECC71", display: "inline-block" }} />
+                      <span style={{ fontFamily: "monospace", fontSize: 9, color: "#5BD996", letterSpacing: "0.08em" }}>EN VIVO</span>
+                    </div>
+                  </div>
+                  {/* Map area */}
+                  <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
+                    <svg width="312" height="420" viewBox="0 0 312 420" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                      <rect width="312" height="420" fill="#0E1322" />
+                      <line x1="0" y1="140" x2="312" y2="140" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                      <line x1="0" y1="200" x2="312" y2="200" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                      <line x1="0" y1="260" x2="312" y2="260" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                      <line x1="80" y1="0" x2="80" y2="420" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                      <line x1="156" y1="0" x2="156" y2="420" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                      <line x1="230" y1="0" x2="230" y2="420" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                      <rect x="22" y="60" width="118" height="100" rx="14" fill="rgba(46,204,113,0.16)" stroke="rgba(46,204,113,0.42)" strokeWidth="1" />
+                      <rect x="168" y="80" width="122" height="88" rx="14" fill="rgba(217,48,48,0.2)" stroke="rgba(217,48,48,0.55)" strokeWidth="1" />
+                      <rect x="42" y="180" width="140" height="76" rx="14" fill="rgba(240,180,41,0.15)" stroke="rgba(240,180,41,0.42)" strokeWidth="1" />
+                      <rect x="170" y="188" width="118" height="72" rx="14" fill="rgba(46,204,113,0.14)" stroke="rgba(46,204,113,0.38)" strokeWidth="1" />
+                      <text x="32" y="86" fontFamily="monospace" fontSize="8" fill="rgba(91,217,150,0.8)" fontWeight="600">CONDESA</text>
+                      <text x="176" y="104" fontFamily="monospace" fontSize="8" fill="rgba(238,139,134,0.85)" fontWeight="600">CENTRO</text>
+                      <text x="52" y="202" fontFamily="monospace" fontSize="8" fill="rgba(240,197,102,0.85)" fontWeight="600">DOCTORES</text>
+                      <text x="178" y="208" fontFamily="monospace" fontSize="8" fill="rgba(91,217,150,0.8)" fontWeight="600">DEL VALLE</text>
+                      <circle cx="156" cy="210" r="9" fill="#E8563A" />
+                      <circle cx="156" cy="210" r="18" fill="none" stroke="rgba(232,86,58,0.3)" strokeWidth="1.5" />
+                      <circle cx="156" cy="210" r="32" fill="none" stroke="rgba(232,86,58,0.1)" strokeWidth="1" />
+                    </svg>
+                    {/* Floating stats panel */}
+                    <div style={{ position: "absolute", top: 10, left: 10, right: 10, background: "rgba(19,23,42,0.72)", backdropFilter: "blur(18px)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "8px 4px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", boxShadow: "0 4px 20px -8px rgba(0,0,0,0.6)" }}>
+                      {[{n:"4",l:"LIBRES",c:"#5BD996"},{n:"2",l:"VIGILA",c:"#F0C566"},{n:"1",l:"EVITAR",c:"#EE8B86"},{n:"14",l:"REPORTES",c:"#D6B85E"}].map((s,i) => (
+                        <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, borderRight: i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none" }}>
+                          <span style={{ fontWeight: 800, fontSize: 17, color: s.c, lineHeight: 1 }}>{s.n}</span>
+                          <span style={{ fontFamily: "monospace", fontSize: 7, color: "rgba(244,242,238,0.45)", letterSpacing: "0.06em" }}>{s.l}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Alert card */}
+                  <div style={{ margin: "0 10px 10px", background: "rgba(19,23,42,0.92)", border: "1px solid rgba(217,48,48,0.35)", borderRadius: 18, padding: "10px 14px 12px" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 7 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#D93030", boxShadow: "0 0 8px #D93030", display: "inline-block" }} />
+                        <span style={{ fontFamily: "monospace", fontSize: 9, color: "#EE8B86", fontWeight: 600, letterSpacing: "0.08em" }}>MARCHA ACTIVA · EVITAR</span>
+                      </div>
+                      <span style={{ fontFamily: "monospace", fontSize: 9, color: "rgba(244,242,238,0.35)" }}>hace 12m</span>
+                    </div>
+                    <div style={{ fontSize: 12, color: "#F4F2EE", lineHeight: 1.45 }}>Centro Histórico bloqueado por el norte. <span style={{ color: "#EE8B86", fontWeight: 600 }}>Evita el Zócalo.</span></div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 9 }}>
+                      <span style={{ fontFamily: "monospace", fontSize: 9, color: "#D6B85E" }}>6 fuentes confirman</span>
+                      <div style={{ background: "#D93030", color: "#fff", fontSize: 11, fontWeight: 600, padding: "5px 12px", borderRadius: 10 }}>Ruta segura</div>
+                    </div>
+                  </div>
                 </div>
                 <div className="gleam" />
               </div>
@@ -364,21 +401,80 @@ export default function InfoPage() {
                 <div>
                   <div className="phone-frame">
                     <div className="notch" />
-                    <div className="screen" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <svg width="312" height="676" viewBox="0 0 312 676" fill="none">
-                        <rect width="312" height="676" fill="#0E1322" />
-                        <rect x="20" y="140" width="130" height="100" rx="14" fill="rgba(46,204,113,0.18)" stroke="rgba(46,204,113,0.45)" strokeWidth="1" />
-                        <rect x="170" y="160" width="120" height="90" rx="14" fill="rgba(217,48,48,0.22)" stroke="rgba(217,48,48,0.55)" strokeWidth="1" />
-                        <rect x="40" y="258" width="140" height="75" rx="14" fill="rgba(240,180,41,0.17)" stroke="rgba(240,180,41,0.45)" strokeWidth="1" />
-                        <circle cx="156" cy="338" r="8" fill="#E8563A" />
-                        <circle cx="156" cy="338" r="18" fill="none" stroke="rgba(232,86,58,0.35)" strokeWidth="1.5" />
-                        <circle cx="156" cy="338" r="70" fill="none" stroke="rgba(232,86,58,0.07)" strokeWidth="1" />
-                        <rect x="14" y="520" width="284" height="90" rx="18" fill="rgba(30,36,56,0.97)" stroke="rgba(217,48,48,0.38)" strokeWidth="1" />
-                        <circle cx="36" cy="554" r="9" fill="#D93030" />
-                        <rect x="54" y="543" width="90" height="8" rx="4" fill="rgba(244,242,238,0.75)" />
-                        <rect x="54" y="559" width="140" height="6" rx="3" fill="rgba(244,242,238,0.3)" />
-                        <rect x="54" y="572" width="110" height="6" rx="3" fill="rgba(244,242,238,0.3)" />
-                      </svg>
+                    <div className="screen" style={{ display: "flex", flexDirection: "column", background: "#0E1322", overflow: "hidden" }}>
+                      {/* App header */}
+                      <div style={{ padding: "52px 18px 10px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                        <div style={{ fontWeight: 800, fontSize: 22, color: "#F4F2EE", letterSpacing: "-0.02em", lineHeight: 1 }}>CDMX <span style={{ color: "#D93030" }}>ahora</span></div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(46,204,113,0.1)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: 999, padding: "4px 9px" }}>
+                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2ECC71", display: "inline-block" }} />
+                          <span style={{ fontFamily: "monospace", fontSize: 9, color: "#5BD996", letterSpacing: "0.08em" }}>EN VIVO</span>
+                        </div>
+                      </div>
+                      {/* Map */}
+                      <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
+                        <svg width="312" height="480" viewBox="0 0 312 480" fill="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                          <rect width="312" height="480" fill="#0E1322" />
+                          {/* Grid */}
+                          <line x1="0" y1="120" x2="312" y2="120" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                          <line x1="0" y1="200" x2="312" y2="200" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                          <line x1="0" y1="280" x2="312" y2="280" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                          <line x1="0" y1="360" x2="312" y2="360" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                          <line x1="78" y1="0" x2="78" y2="480" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                          <line x1="156" y1="0" x2="156" y2="480" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                          <line x1="234" y1="0" x2="234" y2="480" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                          {/* Zones */}
+                          <rect x="14" y="50" width="126" height="96" rx="14" fill="rgba(46,204,113,0.17)" stroke="rgba(46,204,113,0.44)" strokeWidth="1" />
+                          <rect x="162" y="70" width="132" height="86" rx="14" fill="rgba(217,48,48,0.2)" stroke="rgba(217,48,48,0.54)" strokeWidth="1" />
+                          <rect x="28" y="168" width="148" height="80" rx="14" fill="rgba(240,180,41,0.15)" stroke="rgba(240,180,41,0.42)" strokeWidth="1" />
+                          <rect x="162" y="178" width="132" height="70" rx="14" fill="rgba(46,204,113,0.14)" stroke="rgba(46,204,113,0.38)" strokeWidth="1" />
+                          <rect x="14" y="278" width="130" height="76" rx="14" fill="rgba(46,204,113,0.14)" stroke="rgba(46,204,113,0.38)" strokeWidth="1" />
+                          <rect x="162" y="268" width="132" height="86" rx="14" fill="rgba(240,180,41,0.15)" stroke="rgba(240,180,41,0.42)" strokeWidth="1" />
+                          {/* Labels */}
+                          <text x="22" y="72" fontFamily="monospace" fontSize="8" fill="rgba(91,217,150,0.85)" fontWeight="700">POLANCO</text>
+                          <text x="170" y="90" fontFamily="monospace" fontSize="8" fill="rgba(238,139,134,0.9)" fontWeight="700">CENTRO</text>
+                          <text x="38" y="190" fontFamily="monospace" fontSize="8" fill="rgba(240,197,102,0.88)" fontWeight="700">DOCTORES</text>
+                          <text x="170" y="198" fontFamily="monospace" fontSize="8" fill="rgba(91,217,150,0.85)" fontWeight="700">CONDESA</text>
+                          <text x="22" y="298" fontFamily="monospace" fontSize="8" fill="rgba(91,217,150,0.85)" fontWeight="700">COYOACÁN</text>
+                          <text x="170" y="290" fontFamily="monospace" fontSize="8" fill="rgba(240,197,102,0.88)" fontWeight="700">ROMA NORTE</text>
+                          {/* User location */}
+                          <circle cx="156" cy="240" r="9" fill="#E8563A" />
+                          <circle cx="156" cy="240" r="20" fill="none" stroke="rgba(232,86,58,0.28)" strokeWidth="1.5" />
+                          <circle cx="156" cy="240" r="36" fill="none" stroke="rgba(232,86,58,0.1)" strokeWidth="1" />
+                        </svg>
+                        {/* Stats panel */}
+                        <div style={{ position: "absolute", top: 10, left: 10, right: 10, background: "rgba(19,23,42,0.72)", backdropFilter: "blur(18px)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "8px 4px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
+                          {[{n:"4",l:"LIBRES",c:"#5BD996"},{n:"2",l:"VIGILA",c:"#F0C566"},{n:"1",l:"EVITAR",c:"#EE8B86"},{n:"14",l:"REPORTES",c:"#D6B85E"}].map((s,i) => (
+                            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, borderRight: i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none" }}>
+                              <span style={{ fontWeight: 800, fontSize: 17, color: s.c, lineHeight: 1 }}>{s.n}</span>
+                              <span style={{ fontFamily: "monospace", fontSize: 7, color: "rgba(244,242,238,0.45)", letterSpacing: "0.06em" }}>{s.l}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Alert carousel card */}
+                      <div style={{ margin: "0 10px 10px", background: "rgba(19,23,42,0.9)", border: "1px solid rgba(217,48,48,0.32)", borderRadius: 20, overflow: "hidden" }}>
+                        <div style={{ width: 32, height: 4, background: "rgba(255,255,255,0.18)", borderRadius: 9, margin: "8px auto 4px" }} />
+                        <div style={{ padding: "4px 16px 14px" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                              <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#D93030", boxShadow: "0 0 8px #D93030", display: "inline-block" }} />
+                              <span style={{ fontFamily: "monospace", fontSize: 9, color: "#EE8B86", fontWeight: 600, letterSpacing: "0.08em" }}>CENTRO · EVITAR</span>
+                            </div>
+                            <span style={{ fontFamily: "monospace", fontSize: 9, color: "rgba(244,242,238,0.35)" }}>12m</span>
+                          </div>
+                          <div style={{ fontSize: 12.5, color: "#F4F2EE", lineHeight: 1.48 }}>Marcha activa en Centro Histórico. El Zócalo bloqueado por el norte. <span style={{ color: "#EE8B86", fontWeight: 600 }}>Mejor evítalo.</span></div>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 10 }}>
+                            <span style={{ fontFamily: "monospace", fontSize: 9, color: "#D6B85E" }}>6 fuentes confirman</span>
+                            <div style={{ background: "#D93030", color: "#fff", fontSize: 11, fontWeight: 600, padding: "5px 13px", borderRadius: 11 }}>Ver ruta</div>
+                          </div>
+                        </div>
+                        {/* dot indicators */}
+                        <div style={{ display: "flex", justifyContent: "center", gap: 5, paddingBottom: 10 }}>
+                          <div style={{ width: 18, height: 5, borderRadius: 9, background: "#D93030" }} />
+                          <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,0.2)" }} />
+                          <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,0.2)" }} />
+                        </div>
+                      </div>
                     </div>
                     <div className="gleam" />
                   </div>
@@ -405,23 +501,72 @@ export default function InfoPage() {
               </div>
             </div>
 
-            {/* row 2: chat */}
+            {/* row 2: zonas + chat */}
             <div className="show flip reveal">
               <div className="show-media">
                 <div>
                   <div className="phone-frame">
                     <div className="notch" />
-                    <div className="screen" style={{ display: "flex", flexDirection: "column", padding: "80px 16px 20px", gap: 12, background: "#13172A" }}>
-                      {/* Chat bubbles */}
-                      <div style={{ background: "rgba(30,36,56,0.9)", borderRadius: "16px 16px 16px 4px", padding: "12px 14px", fontSize: 13, lineHeight: 1.5, color: "#F4F2EE", maxWidth: "85%", border: "1px solid rgba(255,255,255,0.07)" }}>
-                        ¿Puedo llevar a mi familia al Zócalo ahorita?
+                    <div className="screen" style={{ display: "flex", flexDirection: "column", background: "#13172A", overflow: "hidden" }}>
+                      {/* ── Chat header (same as real app) ── */}
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "52px 18px 14px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+                        <div style={{ width: 40, height: 40, borderRadius: 13, background: "linear-gradient(150deg,#E8563A,#D93030)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <svg width="22" height="22" viewBox="0 0 48 48" fill="none">
+                            <g stroke="white" strokeWidth="2.4" strokeLinecap="round">
+                              <path d="M15 18 8 13" /><path d="M14 23 6 22" /><path d="M15 28 8 32" />
+                              <path d="M33 18 40 13" /><path d="M34 23 42 22" /><path d="M33 28 40 32" />
+                            </g>
+                            <ellipse cx="24" cy="24" rx="10.5" ry="11.5" fill="white" />
+                            <circle cx="20" cy="23" r="1.6" fill="#D93030" />
+                            <circle cx="28" cy="23" r="1.6" fill="#D93030" />
+                            <path d="M21 28 Q24 30 27 28" stroke="#D93030" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+                          </svg>
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 600, fontSize: 16, color: "#F4F2EE", lineHeight: 1.2 }}>Lote</div>
+                          <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 2 }}>
+                            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#2ECC71", display: "inline-block" }} />
+                            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>Monitoreando CDMX</span>
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(214,184,94,0.1)", border: "1px solid rgba(214,184,94,0.28)", borderRadius: 999, padding: "4px 9px" }}>
+                          <span style={{ fontFamily: "monospace", fontWeight: 700, fontSize: 10, color: "#D6B85E" }}>7</span>
+                          <span style={{ fontFamily: "monospace", fontSize: 8, color: "rgba(214,184,94,0.7)", lineHeight: 1.2 }}>zonas<br/>activas</span>
+                        </div>
                       </div>
-                      <div style={{ background: "linear-gradient(150deg,rgba(232,86,58,0.15),rgba(217,48,48,0.08))", borderRadius: "16px 16px 4px 16px", padding: "12px 14px", fontSize: 13, lineHeight: 1.5, color: "#F4F2EE", maxWidth: "90%", alignSelf: "flex-end", border: "1px solid rgba(217,48,48,0.3)" }}>
-                        Hay una marcha activa en Centro Histórico desde hace 40 min. El Zócalo está bloqueado por el norte. <b style={{ color: "#EE8B86" }}>Mejor evítalo ahorita.</b>
+                      {/* ── Messages ── */}
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10, padding: "14px 14px 10px", overflowY: "hidden" }}>
+                        {/* Date divider */}
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+                          <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.07)" }} />
+                          <span style={{ fontFamily: "monospace", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em" }}>HOY</span>
+                          <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.07)" }} />
+                        </div>
+                        {/* User bubble */}
+                        <div style={{ alignSelf: "flex-end", background: "rgba(232,86,58,0.12)", border: "1px solid rgba(217,48,48,0.25)", borderRadius: "16px 16px 4px 16px", padding: "10px 13px", fontSize: 12.5, lineHeight: 1.5, color: "#F4F2EE", maxWidth: "82%" }}>
+                          ¿Puedo llevar a mi familia al Zócalo ahorita?
+                        </div>
+                        {/* Lote bubble */}
+                        <div style={{ alignSelf: "flex-start", background: "rgba(30,36,56,0.95)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "4px 16px 16px 16px", padding: "10px 13px", fontSize: 12.5, lineHeight: 1.5, color: "#F4F2EE", maxWidth: "88%" }}>
+                          Hay una marcha activa desde hace 40 min. El Zócalo está bloqueado. <span style={{ color: "#EE8B86", fontWeight: 600 }}>Mejor evítalo.</span>
+                          {/* Zone chips */}
+                          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 9 }}>
+                            <span style={{ background: "rgba(217,48,48,0.14)", border: "1px solid rgba(217,48,48,0.42)", borderRadius: 8, padding: "4px 9px", fontSize: 10, color: "#EE8B86", fontFamily: "monospace", fontWeight: 600, letterSpacing: "0.04em" }}>Zócalo · EVITAR</span>
+                            <span style={{ background: "rgba(46,204,113,0.12)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: 8, padding: "4px 9px", fontSize: 10, color: "#5BD996", fontFamily: "monospace", fontWeight: 600, letterSpacing: "0.04em" }}>Eje Central · LIBRE</span>
+                          </div>
+                          {/* Sources */}
+                          <div style={{ marginTop: 9, fontFamily: "monospace", fontSize: 10, color: "#D6B85E", display: "flex", alignItems: "center", gap: 5 }}>
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#D6B85E" strokeWidth="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+                            6 fuentes confirman
+                          </div>
+                        </div>
                       </div>
-                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                        <span style={{ background: "rgba(217,48,48,0.14)", border: "1px solid rgba(217,48,48,0.4)", borderRadius: 8, padding: "5px 10px", fontSize: 11, color: "#EE8B86", fontFamily: "var(--mono)", fontWeight: 600, letterSpacing: "0.04em" }}>Zócalo · EVITAR</span>
-                        <span style={{ background: "rgba(46,204,113,0.13)", border: "1px solid rgba(46,204,113,0.4)", borderRadius: 8, padding: "5px 10px", fontSize: 11, color: "#5BD996", fontFamily: "var(--mono)", fontWeight: 600, letterSpacing: "0.04em" }}>Eje Central · LIBRE</span>
+                      {/* ── Input bar ── */}
+                      <div style={{ margin: "0 12px 14px", background: "rgba(30,36,56,0.85)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "10px 14px", display: "flex", alignItems: "center", gap: 8 }}>
+                        <div style={{ flex: 1, fontSize: 12, color: "rgba(244,242,238,0.35)" }}>Pregunta algo...</div>
+                        <div style={{ width: 30, height: 30, borderRadius: 10, background: "linear-gradient(150deg,#E8563A,#D93030)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                        </div>
                       </div>
                     </div>
                     <div className="gleam" />
