@@ -33,8 +33,8 @@ export default function InfoPage() {
           --mono:'JetBrains Mono',ui-monospace,monospace;
         }
         *{box-sizing:border-box;margin:0;padding:0;}
-        html{scroll-behavior:smooth;}
-        body{background:var(--page);color:var(--text);font-family:var(--ui);-webkit-font-smoothing:antialiased;}
+        html{scroll-behavior:smooth;overflow-x:hidden;}
+        body{background:var(--page);color:var(--text);font-family:var(--ui);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
         a{color:inherit;text-decoration:none;}
 
         /* ── typography ── */
