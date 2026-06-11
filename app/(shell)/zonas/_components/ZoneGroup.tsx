@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { useTranslation } from "@/lib/i18n/context";
 
 const getStatusStyles = (status: string) => {
   switch (status) {
@@ -9,7 +12,7 @@ const getStatusStyles = (status: string) => {
         badgeBg: "bg-[rgba(217,48,48,0.12)] dark:bg-[rgba(217,48,48,0.14)]",
         badgeBorder: "border-[rgba(217,48,48,0.40)] dark:border-[rgba(217,48,48,0.45)]",
         badgeText: "text-[var(--redT)]",
-        badge: "EVITAR",
+        badgeKey: "avoid" as const,
         anim: "animate-[loteDot_2.2s_ease-in-out_infinite]",
         cardBg: "bg-[linear-gradient(180deg,rgba(217,48,48,0.08),rgba(217,48,48,0.02))] dark:bg-[linear-gradient(180deg,rgba(217,48,48,0.15),rgba(217,48,48,0.05))]",
         cardBorder: "border-[rgba(217,48,48,0.28)] dark:border-[rgba(217,48,48,0.32)]",
@@ -22,7 +25,7 @@ const getStatusStyles = (status: string) => {
         badgeBg: "bg-[rgba(240,180,41,0.18)] dark:bg-[rgba(240,180,41,0.15)]",
         badgeBorder: "border-[rgba(240,180,41,0.55)] dark:border-[rgba(240,180,41,0.50)]",
         badgeText: "text-[var(--warnT)]",
-        badge: "MONITOREAR",
+        badgeKey: "watch" as const,
         anim: "animate-[loteDot_3.2s_ease-in-out_infinite]",
         cardBg: "bg-surface",
         cardBorder: "border-[rgba(19,23,42,0.09)] dark:border-[rgba(255,255,255,0.08)]",
@@ -36,7 +39,7 @@ const getStatusStyles = (status: string) => {
         badgeBg: "bg-[rgba(46,204,113,0.14)] dark:bg-[rgba(46,204,113,0.13)]",
         badgeBorder: "border-[rgba(46,204,113,0.45)] dark:border-[rgba(46,204,113,0.42)]",
         badgeText: "text-[var(--greenT)]",
-        badge: "TRANQUILO",
+        badgeKey: "clear" as const,
         anim: "none",
         cardBg: "bg-surface",
         cardBorder: "border-[rgba(19,23,42,0.09)] dark:border-[rgba(255,255,255,0.08)]",
@@ -47,6 +50,7 @@ const getStatusStyles = (status: string) => {
 
 function ZoneCard({ zone }: { zone: any }) {
   const s = getStatusStyles(zone.status);
+  const t = useTranslation();
 
   return (
     <div className={`${s.cardBg} border ${s.cardBorder} rounded-[16px] p-[14px] px-[15px] ${s.cardShadow}`}>
@@ -59,7 +63,7 @@ function ZoneCard({ zone }: { zone: any }) {
           </div>
         </div>
         <span className={`px-[10px] py-1 rounded-lg ${s.badgeBg} border ${s.badgeBorder} font-mono text-[10px] font-semibold tracking-[0.03em] ${s.badgeText} whitespace-nowrap shrink-0`}>
-          {s.badge}
+          {t.status[s.badgeKey]}
         </span>
       </div>
 

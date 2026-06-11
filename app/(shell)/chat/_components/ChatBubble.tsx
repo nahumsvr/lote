@@ -1,3 +1,6 @@
+"use client"
+
+import { useTranslation } from "@/lib/i18n/context"
 import ZonaChip from "./ZonaChip"
 import MapaInteractivo from "./MapaInteractivo"
 
@@ -31,6 +34,8 @@ export default function ChatBubble({
     chips,
     mapa,
 }: ChatBubbleProps) {
+    const t = useTranslation()
+
     return (
         <div className={`flex flex-col gap-1 ${esUsuario ? "self-end items-end max-w-[82%]" : "self-start items-start max-w-[88%] min-w-0"}`}>
             <div
@@ -51,7 +56,7 @@ export default function ChatBubble({
             </div>
             {!esUsuario && (fuentes || tiempo) && (
                 <div className="font-mono text-[9.5px] text-white/35 px-1">
-                    {fuentes && <span className="text-[#C8A84B]">{fuentes} fuentes</span>}
+                    {fuentes ? <span className="text-[#C8A84B]">{fuentes} {t.chat.sources}</span> : null}
                     {fuentes && tiempo && <span className="mx-1 opacity-50">·</span>}
                     {tiempo && <span>{tiempo}</span>}
                 </div>
