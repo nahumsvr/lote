@@ -50,6 +50,7 @@ export default function NavBar() {
     },
   ];
 
+
   return (
     <div className="relative flex sm:justify-center sm:items-center px-2 sm:px-8 sm:py-0 pt-[11px] pb-[22px] h-[84px] sm:h-[72px] transition-colors duration-300">
       {/* Desktop Logo (Left aligned) */}

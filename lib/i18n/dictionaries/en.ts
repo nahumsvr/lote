@@ -10,6 +10,7 @@ export const en = {
     chat: "Chat",
     zones: "Zones",
     settings: "Settings",
+    info: "Info",
   },
 
   status: {

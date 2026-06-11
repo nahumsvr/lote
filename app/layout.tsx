@@ -18,8 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Lote — CDMX in real time",
-  description:
-    "Real-time urban mobility agent for Mexico City.",
+  description: "Real-time urban mobility agent for Mexico City.",
 };
 
 export const viewport: Viewport = {
@@ -35,7 +34,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // aplicará el cliente hasta que ThemeProvider lee localStorage.
     <html
       lang="en"
       suppressHydrationWarning
