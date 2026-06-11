@@ -1,7 +1,7 @@
 "use client";
 
-import { ThemeToggle } from "../_components/shared/ThemeToggle";
 import { useLocale, type Locale } from "@/lib/i18n/context";
+import { ThemeToggle } from "../../_components/shared/ThemeToggle";
 
 const LANGUAGES: { code: Locale; label: string; flag: string }[] = [
   { code: "en", label: "English", flag: "🇺🇸" },
@@ -49,8 +49,8 @@ export default function ConfigPage() {
                 key={lang.code}
                 onClick={() => setLocale(lang.code)}
                 className={`flex items-center gap-3 px-4 py-3.5 rounded-[14px] border transition-all text-left ${isActive
-                    ? "bg-primary/[0.10] border-primary/40 shadow-[0_0_0_1px_rgba(217,48,48,0.15)]"
-                    : "bg-surface border-foreground/[0.08] hover:border-foreground/[0.15]"
+                  ? "bg-primary/[0.10] border-primary/40 shadow-[0_0_0_1px_rgba(217,48,48,0.15)]"
+                  : "bg-surface border-foreground/[0.08] hover:border-foreground/[0.15]"
                   }`}
               >
                 <span className="text-[22px]">{lang.flag}</span>
