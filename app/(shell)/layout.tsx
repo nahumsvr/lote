@@ -37,7 +37,6 @@ export default function ShellLayout({
 
       {/* Bottom Nav */}
       <div className="z-20 relative bg-[rgba(255,255,255,0.94)] dark:bg-[rgba(19,23,42,0.92)] backdrop-blur-[14px] border-[rgba(19,23,42,0.08)] dark:border-[rgba(255,255,255,0.07)] border-t w-full shrink-0">
-        <NavBar />
       </div>
     </div>
   );

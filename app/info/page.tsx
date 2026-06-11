@@ -268,7 +268,6 @@ export default function InfoPage() {
       </svg>
 
       <div className="shell">
-        <Navbar />
         <HeroSection />
         <HowItWorksSection />
         <hr className="rule" />
