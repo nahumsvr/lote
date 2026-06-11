@@ -14,6 +14,7 @@ export const es: Dictionary = {
     chat: "Chat",
     zones: "Zonas",
     settings: "Config",
+    info: "Info",
   },
 
   status: {
