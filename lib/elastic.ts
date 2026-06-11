@@ -1,32 +1,32 @@
 /**
  * lib/elastic.ts
- * Cliente de Elastic para LOTE — capa de datos central.
+ * Elastic client for LOTE — central data layer.
  *
- * EN PRODUCCIÓN: Este archivo inicializa el cliente oficial de Elastic
- * usando @elastic/elasticsearch. Para el hackathon, los datos son mock
- * pero la forma de las funciones es idéntica a la producción real.
+ * IN PRODUCTION: This file initializes the official Elastic client
+ * using @elastic/elasticsearch. For the hackathon, data is mocked
+ * but the function signatures are identical to real production.
  *
- * INTEGRACIÓN CON GOOGLE AGENT BUILDER (Elastic MCP Server):
- * Google Agent Builder puede conectarse a Elastic via el Elastic MCP Server,
- * que expone herramientas de búsqueda vectorial y semántica directamente
- * al agente. El flujo sería:
- *   Agent Builder → MCP Server (Elastic) → índice lote-eventos
- * Esto permite que el agente entienda consultas en lenguaje natural como
- * "¿qué zonas están en riesgo ahorita?" sin SQL ni queries manuales.
+ * GOOGLE AGENT BUILDER INTEGRATION (Elastic MCP Server):
+ * Google Agent Builder can connect to Elastic via the Elastic MCP Server,
+ * which exposes vector and semantic search tools directly
+ * to the agent. The flow would be:
+ *   Agent Builder → MCP Server (Elastic) → lote-eventos index
+ * This allows the agent to understand natural language queries like
+ * "which zones are at risk right now?" without SQL or manual queries.
  *
- * Referencia: https://www.elastic.co/docs/solutions/search/mcp
+ * Reference: https://www.elastic.co/docs/solutions/search/mcp
  */
 
-// ─── PRODUCCIÓN: Inicialización del cliente real ─────────────────────────────
+// ─── PRODUCTION: Real client initialization ───────────────────────────────────
 //
 // import { Client } from '@elastic/elasticsearch';
 //
 // const elasticClient = new Client({
-//   node: process.env.ELASTIC_URL!,           // ej: https://mi-cluster.es.io:9243
+//   node: process.env.ELASTIC_URL!,           // e.g.: https://mi-cluster.es.io:9243
 //   auth: {
-//     apiKey: process.env.ELASTIC_API_KEY!,   // API Key generada en Kibana
+//     apiKey: process.env.ELASTIC_API_KEY!,   // API Key generated in Kibana
 //   },
-//   // Para Elastic Cloud con SSL verificado:
+//   // For Elastic Cloud with verified SSL:
 //   // tls: { rejectUnauthorized: true },
 // });
 //
@@ -35,12 +35,12 @@
 
 import type { Evento } from './tipos';
 
-// Latencia simulada para imitar el round-trip real a Elastic Cloud
+// Simulated latency to mimic the real round-trip to Elastic Cloud
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const latencia = () => delay(150 + Math.random() * 150);
 
-// ─── DATOS MOCK — 7 zonas representativas de CDMX ────────────────────────────
-// Coordenadas reales. Estados calibrados para el demo del Mundial 2026.
+// ─── MOCK DATA — 7 representative zones of CDMX ───────────────────────────────
+// Real coordinates. States calibrated for the 2026 World Cup demo.
 
 const EVENTOS_MOCK: Evento[] = [
   {
@@ -55,7 +55,7 @@ const EVENTOS_MOCK: Evento[] = [
     fuentes_count: 5,
     lat: 19.4326,
     lng: -99.1332,
-    timestamp: new Date(Date.now() - 1000 * 60 * 18).toISOString(), // hace 18 min
+    timestamp: new Date(Date.now() - 1000 * 60 * 18).toISOString(), // 18 min ago
     confianza: 0.92,
   },
   {
@@ -150,12 +150,12 @@ const EVENTOS_MOCK: Evento[] = [
   },
 ];
 
-// ─── FUNCIONES EXPORTADAS ─────────────────────────────────────────────────────
+// ─── EXPORTED FUNCTIONS ───────────────────────────────────────────────────────
 
 /**
- * Devuelve todos los eventos activos de una zona específica.
+ * Returns all active events for a specific zone.
  *
- * PRODUCCIÓN:
+ * PRODUCTION:
  *   const { hits } = await elasticClient.search({
  *     index: INDICE,
  *     query: { term: { zona: { value: zona } } },
@@ -172,10 +172,10 @@ export async function consultarEventosPorZona(zona: string): Promise<Evento[]> {
 }
 
 /**
- * Devuelve todos los eventos activos de CDMX, ordenados por timestamp desc.
- * Esta es la query principal que alimenta el mapa y el contexto del chatbot.
+ * Returns all active events in CDMX, sorted by timestamp desc.
+ * This is the main query that powers the map and chatbot context.
  *
- * PRODUCCIÓN:
+ * PRODUCTION:
  *   const { hits } = await elasticClient.search({
  *     index: INDICE,
  *     query: { match_all: {} },
@@ -192,10 +192,10 @@ export async function consultarTodosLosEventos(): Promise<Evento[]> {
 }
 
 /**
- * Devuelve el estado de riesgo actual de una zona:
- * el peor estado entre todos sus eventos recientes.
+ * Returns the current risk state for a zone:
+ * the worst state among all its recent events.
  *
- * PRODUCCIÓN:
+ * PRODUCTION:
  *   const { hits } = await elasticClient.search({
  *     index: INDICE,
  *     query: {
@@ -220,7 +220,7 @@ export async function consultarEstadoZona(
 
   if (eventos.length === 0) return 'tranquilo';
 
-  // El estado más grave gana — evitar > monitorear > tranquilo
+  // The most severe state wins — evitar > monitorear > tranquilo
   const prioridad: Record<Evento['estado'], number> = {
     evitar: 2,
     monitorear: 1,

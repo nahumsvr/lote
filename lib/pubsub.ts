@@ -1,55 +1,55 @@
 /**
  * lib/pubsub.ts
- * Simulación del pipeline de ingesta vía Google Cloud Pub/Sub para LOTE.
+ * Simulation of the ingestion pipeline via Google Cloud Pub/Sub for LOTE.
  *
- * FLUJO COMPLETO EN PRODUCCIÓN:
+ * FULL PRODUCTION FLOW:
  *
- *   [Fuentes]          [Ingesta]               [Procesamiento]        [Salida]
+ *   [Sources]          [Ingestion]             [Processing]           [Output]
  *   Telegram  ───┐
  *   RSS        ───┼──▶ Cloud Pub/Sub ──▶ Cloud Function ──▶ Vertex AI ──▶ Elastic
- *   Reddit     ───┘    (topic: lote-eventos)  (clasificador)              (índice)
+ *   Reddit     ───┘    (topic: lote-eventos)  (classifier)               (index)
  *
- *   1. Una Cloud Function corre cada 5 minutos y monitorea las 3 fuentes.
- *   2. Cada mensaje nuevo se publica en el topic `lote-eventos` de Pub/Sub.
- *   3. Una segunda Cloud Function se suscribe al topic y:
- *      a. Recibe el mensaje crudo.
- *      b. Llama a Vertex AI (lib/gemini.ts → clasificarEvento) para clasificarlo.
- *      c. Indexa el evento clasificado en Elastic con todos sus campos.
- *   4. El frontend consulta Elastic (lib/elastic.ts) para pintar el mapa.
+ *   1. A Cloud Function runs every 5 minutes and monitors the 3 sources.
+ *   2. Each new message is published to the `lote-eventos` Pub/Sub topic.
+ *   3. A second Cloud Function subscribes to the topic and:
+ *      a. Receives the raw message.
+ *      b. Calls Vertex AI (lib/gemini.ts → clasificarEvento) to classify it.
+ *      c. Indexes the classified event in Elastic with all its fields.
+ *   4. The frontend queries Elastic (lib/elastic.ts) to render the map.
  *
- * CONFIGURACIÓN EN GOOGLE CLOUD:
- *   1. Crea el topic:
+ * SETUP IN GOOGLE CLOUD:
+ *   1. Create the topic:
  *      `gcloud pubsub topics create lote-eventos`
- *   2. Crea la suscripción para la Cloud Function clasificadora:
+ *   2. Create the subscription for the classifier Cloud Function:
  *      `gcloud pubsub subscriptions create lote-clasificador-sub \
  *         --topic=lote-eventos \
  *         --ack-deadline=60`
- *   3. Deploy de la Cloud Function suscriptora:
+ *   3. Deploy the subscriber Cloud Function:
  *      `gcloud functions deploy clasificarEventoPubSub \
  *         --runtime nodejs20 \
  *         --trigger-topic lote-eventos \
  *         --region us-central1 \
  *         --set-env-vars ELASTIC_URL=...,GEMINI_API_KEY=...`
  *
- * VARIABLES DE ENTORNO REQUERIDAS:
+ * REQUIRED ENVIRONMENT VARIABLES:
  *   GOOGLE_CLOUD_PROJECT_ID=lote-hackathon-2026
  *   PUBSUB_TOPIC_ID=lote-eventos
  *   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
  */
 
-// ─── PRODUCCIÓN: Inicialización del cliente de Pub/Sub ───────────────────────
+// ─── PRODUCTION: Pub/Sub client initialization ────────────────────────────────
 //
 // import { PubSub, Message } from '@google-cloud/pubsub';
 //
 // const pubSubClient = new PubSub({
 //   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-//   // En Cloud Functions/Cloud Run, las credenciales se resuelven automáticamente
-//   // vía Application Default Credentials (ADC) — no necesitas el JSON explícito.
+//   // In Cloud Functions/Cloud Run, credentials are resolved automatically
+//   // via Application Default Credentials (ADC) — no need for the explicit JSON.
 // });
 //
 // const TOPIC_ID = process.env.PUBSUB_TOPIC_ID ?? 'lote-eventos';
 //
-// // Para publicar un mensaje en el topic:
+// // To publish a message to the topic:
 // async function publicarEnTopic(datos: MensajeCrudo): Promise<string> {
 //   const topic = pubSubClient.topic(TOPIC_ID);
 //   const dataBuffer = Buffer.from(JSON.stringify(datos));
@@ -57,7 +57,7 @@
 //   return messageId;
 // }
 //
-// // La Cloud Function suscriptora tendría esta firma:
+// // The subscriber Cloud Function would have this signature:
 // // export const clasificarEventoPubSub = functions.pubsub
 // //   .topic(TOPIC_ID)
 // //   .onPublish(async (message: Message) => {
@@ -72,21 +72,21 @@ import type { Evento } from './tipos';
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const latencia = () => delay(200 + Math.random() * 100);
 
-// ─── TIPOS INTERNOS ───────────────────────────────────────────────────────────
+// ─── INTERNAL TYPES ───────────────────────────────────────────────────────────
 
-// Mensaje crudo tal como llega de las fuentes, antes de clasificación
+// Raw message as it arrives from sources, before classification
 interface MensajeCrudo {
   id: string;
   fuente: Evento['fuente'];
-  texto: string;       // Texto sin procesar del post/canal/feed
-  url?: string;        // URL original del post (para auditoría)
-  zona?: string;       // Zona mencionada explícitamente (opcional)
-  recibido_at: string; // ISO 8601 — cuándo llegó al pipeline
+  texto: string;       // Raw unprocessed text from the post/channel/feed
+  url?: string;        // Original post URL (for auditing)
+  zona?: string;       // Zone explicitly mentioned (optional)
+  recibido_at: string; // ISO 8601 — when it arrived at the pipeline
 }
 
-// ─── BANCO DE MENSAJES CRUDOS SIMULADOS ──────────────────────────────────────
-// Representan lo que llegaría de Telegram, RSS y Reddit antes de que
-// Vertex AI los procese. Texto real, sucio, como viene de la fuente.
+// ─── SIMULATED RAW MESSAGES BANK ─────────────────────────────────────────────
+// These represent what would arrive from Telegram, RSS, and Reddit before
+// Vertex AI processes them. Real, raw text, as it comes from the source.
 
 const MENSAJES_CRUDOS: MensajeCrudo[] = [
   {
@@ -155,26 +155,26 @@ const MENSAJES_CRUDOS: MensajeCrudo[] = [
   },
 ];
 
-// ─── FUNCIONES EXPORTADAS ─────────────────────────────────────────────────────
+// ─── EXPORTED FUNCTIONS ───────────────────────────────────────────────────────
 
 /**
- * Simula la llegada de un nuevo evento al pipeline desde cualquier fuente.
- * En producción, esta función no existiría aquí — la llamaría la Cloud Function
- * de ingesta que monitorea Telegram/RSS/Reddit.
+ * Simulates the arrival of a new event to the pipeline from any source.
+ * In production, this function wouldn't exist here — it would be called by the Cloud Function
+ * that monitors Telegram/RSS/Reddit for ingestion.
  *
- * PRODUCCIÓN — lo que realmente haría la Cloud Function de ingesta:
+ * PRODUCTION — what the ingestion Cloud Function would actually do:
  *   const messageId = await publicarEnTopic({
  *     id: crypto.randomUUID(),
  *     fuente: 'telegram',
  *     texto: mensajeNuevo,
  *     recibido_at: new Date().toISOString(),
  *   });
- *   console.log(`Mensaje ${messageId} publicado en ${TOPIC_ID}`);
+ *   console.log(`Message ${messageId} published to ${TOPIC_ID}`);
  */
 export async function simularEventoEntrante(): Promise<MensajeCrudo> {
   await latencia();
 
-  // Toma un mensaje aleatorio del banco y le actualiza el timestamp
+  // Picks a random message from the bank and updates its timestamp
   const base =
     MENSAJES_CRUDOS[Math.floor(Math.random() * MENSAJES_CRUDOS.length)];
 
@@ -186,18 +186,18 @@ export async function simularEventoEntrante(): Promise<MensajeCrudo> {
 }
 
 /**
- * Devuelve los N mensajes más recientes del pipeline, listos para ser
- * clasificados por Vertex AI e indexados en Elastic.
+ * Returns the N most recent messages from the pipeline, ready to be
+ * classified by Vertex AI and indexed in Elastic.
  *
- * En producción esto sería la suscripción a Pub/Sub, no un array en memoria.
- * La Cloud Function clasificadora recibiría estos mensajes via push/pull:
+ * In production this would be the Pub/Sub subscription, not an in-memory array.
+ * The classifier Cloud Function would receive these messages via push/pull:
  *
  *   const subscription = pubSubClient.subscription('lote-clasificador-sub');
  *   subscription.on('message', async (message: Message) => {
  *     const datos = JSON.parse(message.data.toString()) as MensajeCrudo;
  *     const clasificado = await clasificarEvento(datos.texto, datos.zona);
  *     await indexarEnElastic(clasificado);
- *     message.ack(); // Confirmar procesamiento para evitar redelivery
+ *     message.ack(); // Confirm processing to prevent redelivery
  *   });
  *   subscription.on('error', (err) => console.error('Pub/Sub error:', err));
  */

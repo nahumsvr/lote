@@ -1,29 +1,29 @@
 /**
  * lib/gemini.ts
- * Cliente de Gemini / Vertex AI para LOTE — clasificación y chatbot.
+ * Gemini / Vertex AI client for LOTE — classification and chatbot.
  *
- * Este módulo hace dos cosas completamente distintas con el mismo modelo:
- *   1. CLASIFICAR eventos de texto plano en zonas + estado + confianza.
- *   2. RESPONDER al usuario con la voz de Lote: directa, local, sin rodeos.
+ * This module does two completely different things with the same model:
+ *   1. CLASSIFY plain text events into zones + state + confidence.
+ *   2. RESPOND to the user in Lote's voice: direct, local, no-nonsense.
  *
- * EN PRODUCCIÓN CON VERTEX AI (recomendado para el hackathon GCP):
- *   - Se usa VertexAI SDK en lugar del SDK genérico de Gemini.
- *   - El modelo vive en tu proyecto de Google Cloud, no en api.google.com.
- *   - Permite logging, cuotas y facturación unificada con el resto del stack.
+ * IN PRODUCTION WITH VERTEX AI (recommended for the GCP hackathon):
+ *   - Uses VertexAI SDK instead of the generic Gemini SDK.
+ *   - The model lives in your Google Cloud project, not on api.google.com.
+ *   - Enables unified logging, quotas, and billing with the rest of the stack.
  *
- * EN PRODUCCIÓN CON GEMINI API (alternativa más rápida de setup):
- *   - Se usa @google/generative-ai con GEMINI_API_KEY.
- *   - Más simple de configurar, sin necesidad de credenciales de GCP.
+ * IN PRODUCTION WITH GEMINI API (faster setup alternative):
+ *   - Uses @google/generative-ai with GEMINI_API_KEY.
+ *   - Simpler to configure, no GCP credentials required.
  *
- * CONFIGURACIÓN EN GOOGLE CLOUD (Vertex AI):
- *   1. Habilita la API: `gcloud services enable aiplatform.googleapis.com`
- *   2. Crea una Service Account con rol "Vertex AI User"
- *   3. Descarga el JSON de credenciales y apunta a él con GOOGLE_APPLICATION_CREDENTIALS
- *   4. El endpoint tiene la forma:
+ * SETUP IN GOOGLE CLOUD (Vertex AI):
+ *   1. Enable the API: `gcloud services enable aiplatform.googleapis.com`
+ *   2. Create a Service Account with the "Vertex AI User" role
+ *   3. Download the credentials JSON and point to it with GOOGLE_APPLICATION_CREDENTIALS
+ *   4. The endpoint has the form:
  *      us-central1-aiplatform.googleapis.com/v1/projects/{PROJECT}/locations/us-central1/...
  */
 
-// ─── PRODUCCIÓN OPCIÓN A: Vertex AI SDK ──────────────────────────────────────
+// ─── PRODUCTION OPTION A: Vertex AI SDK ──────────────────────────────────────
 //
 // import { VertexAI } from '@google-cloud/vertexai';
 //
@@ -36,13 +36,13 @@
 //   model: 'gemini-2.0-flash-001',
 //   generationConfig: {
 //     maxOutputTokens: 1024,
-//     temperature: 0.3,     // Bajo para clasificación precisa
+//     temperature: 0.3,     // Low for precise classification
 //     topP: 0.95,
 //   },
 // });
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ─── PRODUCCIÓN OPCIÓN B: Gemini API SDK (más simple) ─────────────────────────
+// ─── PRODUCTION OPTION B: Gemini API SDK (simpler) ────────────────────────────
 //
 // import { GoogleGenerativeAI } from '@google/generative-ai';
 //
@@ -56,7 +56,7 @@
 //   },
 // });
 //
-// // Para clasificación (determinista) se puede bajar más la temperatura:
+// // For classification (deterministic) you can lower the temperature further:
 // const modeloClasificador = genAI.getGenerativeModel({
 //   model: 'gemini-2.0-flash',
 //   generationConfig: { temperature: 0.1, maxOutputTokens: 256 },
@@ -68,7 +68,7 @@ import type { Evento } from './tipos';
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const latencia = () => delay(200 + Math.random() * 100);
 
-// ─── TIPOS INTERNOS ───────────────────────────────────────────────────────────
+// ─── INTERNAL TYPES ───────────────────────────────────────────────────────────
 
 export interface ResultadoClasificacion {
   zona: string;
@@ -79,9 +79,9 @@ export interface ResultadoClasificacion {
   descripcion: string;
 }
 
-// ─── DATOS DE ENTRENAMIENTO IMPLÍCITO (MOCK) ─────────────────────────────────
-// En producción, el modelo recibe el texto crudo y devuelve JSON estructurado.
-// El prompt de sistema le dice qué zonas de CDMX existen y cómo mapear el texto.
+// ─── IMPLICIT TRAINING DATA (MOCK) ───────────────────────────────────────────
+// In production, the model receives raw text and returns structured JSON.
+// The system prompt tells it which CDMX zones exist and how to map the text.
 
 const ZONAS_CDMX = [
   'Centro Histórico',
@@ -109,36 +109,36 @@ const ALCALDIAS_POR_ZONA: Record<string, string> = {
   Doctores: 'Cuauhtémoc',
 };
 
-// ─── FUNCIÓN 1: CLASIFICAR EVENTO ─────────────────────────────────────────────
+// ─── FUNCTION 1: CLASSIFY EVENT ──────────────────────────────────────────────
 
 /**
- * Recibe texto crudo de una fuente (Telegram, RSS, Reddit) y devuelve
- * el evento clasificado con zona, estado y score de confianza.
+ * Receives raw text from a source (Telegram, RSS, Reddit) and returns
+ * the classified event with zone, state, and confidence score.
  *
- * PRODUCCIÓN — prompt real que se mandaría al modelo:
+ * PRODUCTION — actual prompt that would be sent to the model:
  *
  *   const prompt = `
- *     Eres un clasificador de incidentes urbanos para la Ciudad de México.
- *     Analiza el siguiente texto y responde ÚNICAMENTE con un JSON válido.
+ *     You are an urban incident classifier for Mexico City.
+ *     Analyze the following text and respond ONLY with valid JSON.
  *
- *     Zonas válidas de CDMX: ${ZONAS_CDMX.join(', ')}
+ *     Valid CDMX zones: ${ZONAS_CDMX.join(', ')}
  *
- *     Estados posibles:
- *     - "tranquilo": sin incidencias confirmadas
- *     - "monitorear": actividad detectada, no urgente (1-2 fuentes)
- *     - "evitar": riesgo activo confirmado por múltiples fuentes
+ *     Possible states:
+ *     - "tranquilo": no confirmed incidents
+ *     - "monitorear": activity detected, not urgent (1-2 sources)
+ *     - "evitar": active risk confirmed by multiple sources
  *
- *     Texto a clasificar:
+ *     Text to classify:
  *     "${texto}"
  *
- *     Responde con este JSON exacto:
+ *     Respond with this exact JSON:
  *     {
  *       "zona": string,
  *       "alcaldia": string,
  *       "estado": "tranquilo" | "monitorear" | "evitar",
  *       "confianza": number (0-1),
- *       "titulo": string (máx 80 chars),
- *       "descripcion": string (máx 200 chars)
+ *       "titulo": string (max 80 chars),
+ *       "descripcion": string (max 200 chars)
  *     }
  *   `;
  *
@@ -152,7 +152,7 @@ export async function clasificarEvento(
 ): Promise<ResultadoClasificacion> {
   await latencia();
 
-  // Lógica simulada: detecta keywords para asignar estado
+  // Simulated logic: detects keywords to assign state
   const textoLower = texto.toLowerCase();
 
   let estado: Evento['estado'] = 'tranquilo';
@@ -173,7 +173,7 @@ export async function clasificarEvento(
     estado = 'monitorear';
   }
 
-  // Detecta zona en el texto o usa la proporcionada
+  // Detects zone in text or uses the provided one
   const zonaDetectada =
     zona ??
     ZONAS_CDMX.find((z) => textoLower.includes(z.toLowerCase())) ??
@@ -181,7 +181,7 @@ export async function clasificarEvento(
 
   const alcaldia = ALCALDIAS_POR_ZONA[zonaDetectada] ?? 'Cuauhtémoc';
 
-  // Confianza simulada — en producción viene del modelo
+  // Simulated confidence — in production this comes from the model
   const confianza =
     estado === 'evitar'
       ? 0.75 + Math.random() * 0.2
@@ -199,31 +199,31 @@ export async function clasificarEvento(
   };
 }
 
-// ─── FUNCIÓN 2: RESPUESTA DEL CHATBOT ─────────────────────────────────────────
+// ─── FUNCTION 2: CHATBOT RESPONSE ─────────────────────────────────────────────
 
 /**
- * Genera una respuesta de Lote al usuario usando el contexto actual del mapa.
- * La voz es directa, local, sin corporativismo — "el carnal que te dice las cosas al chile".
+ * Generates a Lote response to the user using the current map context.
+ * The voice is direct, local, no corporate tone — "the buddy who tells it to you straight".
  *
- * PRODUCCIÓN — system prompt real:
+ * PRODUCTION — actual system prompt:
  *
  *   const systemPrompt = `
- *     Eres LOTE, un agente de movilidad urbana para la Ciudad de México durante el Mundial 2026.
- *     Hablas como un chilango de confianza: directo, cálido, sin rodeos, con alma local.
- *     No eres el C5. No eres una app corporativa. No asustas sin razón.
+ *     You are LOTE, an urban mobility agent for Mexico City during the 2026 World Cup.
+ *     You speak like a trusted local: direct, warm, no-nonsense, with local soul.
+ *     You're not C5. You're not a corporate app. You don't scare people without reason.
  *
- *     Principios:
- *     - Verdad con empatía. Di lo que el usuario necesita, no lo que quiere oír.
- *     - Ojos abiertos, no miedo. Informa para que no se confíe, no para aterrarlo.
- *     - Precisión sobre velocidad. Si no hay datos, dilo.
- *     - Alma local, uso universal. Hablas como alguien que conoce la ciudad de adentro.
+ *     Principles:
+ *     - Truth with empathy. Say what the user needs, not what they want to hear.
+ *     - Eyes open, not scared. Inform so they stay alert, not terrified.
+ *     - Precision over speed. If there's no data, say so.
+ *     - Local soul, universal use. You speak like someone who knows the city from the inside.
  *
- *     Contexto actual del mapa (eventos en tiempo real de Elastic):
+ *     Current map context (real-time events from Elastic):
  *     ${JSON.stringify(eventosContexto, null, 2)}
  *
- *     Responde en máximo 3 oraciones. Si la pregunta es sobre una zona específica,
- *     menciona el estado actual y el motivo. Si hay alternativas, dálas.
- *     NO uses bullet points. Habla natural.
+ *     Respond in 3 sentences max. If the question is about a specific zone,
+ *     mention the current state and the reason. If there are alternatives, give them.
+ *     NO bullet points. Talk natural.
  *   `;
  *
  *   const result = await modelo.generateContent([
@@ -240,7 +240,7 @@ export async function generarRespuestaChat(
 
   const preguntaLower = pregunta.toLowerCase();
 
-  // Detecta zona mencionada en la pregunta
+  // Detects zone mentioned in the question
   const zonaMencionada = [
     'Centro Histórico',
     'Roma Norte',
@@ -274,7 +274,7 @@ export async function generarRespuestaChat(
     return `${zonaMencionada} está tranquila ahorita. ${eventoReciente.descripcion.slice(0, 100)}. Buen momento para ir.`;
   }
 
-  // Pregunta sobre el estado general de la ciudad
+  // Question about the overall city state
   if (
     preguntaLower.includes('ciudad') ||
     preguntaLower.includes('cdmx') ||
@@ -297,6 +297,6 @@ export async function generarRespuestaChat(
     return `Todo tranquilo por el momento en CDMX. Sin alertas activas. Buen día para moverse — nomás ten los ojos abiertos.`;
   }
 
-  // Respuesta genérica cuando no hay contexto suficiente
+  // Generic response when there's not enough context
   return `Dame más contexto, carnal — ¿a qué zona vas o de dónde sales? Así te puedo orientar con datos reales de ahorita.`;
 }
